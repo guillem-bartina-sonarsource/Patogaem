@@ -1,7 +1,7 @@
 
 #include "Entity.h"
 
-#include "EntityRegistry.hpp"
+#include "EntityRegistry.h"
 #include "Level.h"
 
 EntityRegistryNode* Entity::node = EntityRegistry::registerClass("Entity", false, nullptr);
@@ -9,15 +9,31 @@ EntityRegistryNode* Entity::node = EntityRegistry::registerClass("Entity", false
 unsigned int Entity::nextId = 0;
 
 Entity::Entity(const sf::Vector2f& position, const sf::Vector2f& size, sf::Sprite* sprite)
+: id(nextId++)
 {
-    id = nextId++;
     setPosition(position);
     this->size = size;
     this->sprite = sprite;
     level = nullptr;
 }
 
-Entity::~Entity() {}
+Entity::~Entity()
+{
+    if(sprite)
+    {
+        delete sprite;
+    }
+}
+
+sf::Vector2f Entity::getSize() const
+{
+    return size;
+}
+
+void Entity::setSize(const sf::Vector2f& size)
+{
+    this->size = size;
+}
 
 void Entity::update(const sf::Time deltatime) {}
 

@@ -7,13 +7,13 @@
 
 #include "Engine/INonCopyable.h"
 
-#include <Entity.h>
+#include "Entity.h"
 
 class EntityRegistryNode
 {
     public:
 
-    EntityRegistryNode(unsigned int code, const std::string& name, bool instantiable, EntityRegistryNode* superclass);
+    EntityRegistryNode(const std::string& name, bool instantiable, EntityRegistryNode* superclass);
 
     ~EntityRegistryNode();
 
@@ -21,12 +21,14 @@ class EntityRegistryNode
 
     private:
 
-    unsigned int code;
+    const unsigned int code;
     std::string name;
     bool instantiable;
 
     EntityRegistryNode* superclass;
     std::vector<EntityRegistryNode*> subclasses;
+
+    static unsigned int nextCode;
 
 };
 
@@ -42,8 +44,6 @@ class EntityRegistry : private INonCopyable
     ~EntityRegistry();
 
     static EntityRegistryNode* root;
-
-    static unsigned int nextCode;
 
 };
 

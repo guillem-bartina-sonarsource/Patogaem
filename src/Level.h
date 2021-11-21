@@ -25,6 +25,11 @@ class Level
 
     std::map<unsigned int, Entity*> entities;
 
+    //background.
+    //class? image, tile (grid, sparse?) effects?
+
 };
+
+//Level view?
 
 #endif

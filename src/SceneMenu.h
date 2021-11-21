@@ -33,6 +33,7 @@ private:
     bool updateRequest;
 
     int x;
+
 };
 
 #endif

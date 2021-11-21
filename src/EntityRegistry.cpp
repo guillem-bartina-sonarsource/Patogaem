@@ -1,9 +1,11 @@
 
-#include "EntityRegistry.hpp"
+#include "EntityRegistry.h"
 
-EntityRegistryNode::EntityRegistryNode(unsigned int code, const std::string& name, bool instantiable, EntityRegistryNode* superclass)
+unsigned int EntityRegistryNode::nextCode = 0;
+
+EntityRegistryNode::EntityRegistryNode(const std::string& name, bool instantiable, EntityRegistryNode* superclass)
+: code(nextCode++)
 {
-    this->code = code;
     this->name = name;
     this->instantiable = instantiable;
     this->superclass = superclass;
@@ -23,7 +25,7 @@ EntityRegistry::~EntityRegistry() {}
 
 EntityRegistryNode* EntityRegistry::registerClass(const std::string& name, bool instantiable, EntityRegistryNode* superclass)
 {
-    EntityRegistryNode* node = new EntityRegistryNode(nextCode++, name, instantiable, superclass);
+    EntityRegistryNode* node = new EntityRegistryNode(name, instantiable, superclass);
 
     if(superclass == nullptr)
     {
@@ -37,5 +39,3 @@ EntityRegistryNode* EntityRegistry::registerClass(const std::string& name, bool 
 }
 
 EntityRegistryNode* EntityRegistry::root = nullptr;
-
-unsigned int EntityRegistry::nextCode = 0;

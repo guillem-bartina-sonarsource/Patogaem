@@ -16,6 +16,9 @@ class Entity : public sf::Transformable, public sf::Drawable
     Entity(const sf::Vector2f& position, const sf::Vector2f& size, sf::Sprite* sprite = nullptr);
     ~Entity();
 
+    sf::Vector2f getSize() const;
+    virtual void setSize(const sf::Vector2f& size);
+
     virtual void update(const sf::Time deltatime);
 
     virtual void levelize(Level* level);
@@ -37,15 +40,15 @@ class Entity : public sf::Transformable, public sf::Drawable
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    unsigned int id;
+    const unsigned int id;
 
     sf::Vector2f size;
 
     sf::Sprite* sprite;
 
     static EntityRegistryNode* node;
-
     static unsigned int nextId;
+
 };
 
 #endif

@@ -60,3 +60,7 @@ Ooooo
 Insertar tot a les diferents capes i un cop esigui tot o mentre es vagiu physicant donsc anar ajuntant els diferents
 Groupable en bodies que estiguin en una capa virttual,
 
+//------------------------
+
+PatoFile per treballar amb fitcers generats per el joc (nivells, dialegs, menus, ...)?
+

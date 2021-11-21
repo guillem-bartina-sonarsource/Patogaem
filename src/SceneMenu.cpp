@@ -8,7 +8,8 @@
 
 const std::string SceneMenu::texts[NUM_OPTIONS] = {"PLAY", "EDITOR", "EXIT"};
 
-SceneMenu::SceneMenu(int x) : IScene()
+SceneMenu::SceneMenu(int x)
+: IScene()
 {
     this->x = x;
 }
