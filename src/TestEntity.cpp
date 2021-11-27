@@ -44,7 +44,7 @@ TestEntity::TestEntity(const sf::Vector2f& position)
     sprite->setPlaying(true);
     sprite->setScale(0.5f, 0.5f);
 
-    setSprite(sprite);
+    setDrawable(sprite);
 }
 
 TestEntity::~TestEntity() {}

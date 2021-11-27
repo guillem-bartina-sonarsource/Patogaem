@@ -8,20 +8,20 @@ EntityRegistryNode* Entity::node = EntityRegistry::registerClass("Entity", false
 
 unsigned int Entity::nextId = 0;
 
-Entity::Entity(const sf::Vector2f& position, const sf::Vector2f& size, sf::Sprite* sprite)
+Entity::Entity(const sf::Vector2f& position, const sf::Vector2f& size, sf::Drawable* drawable)
 : id(nextId++)
 {
     setPosition(position);
     this->size = size;
-    this->sprite = sprite;
+    this->drawable = drawable;
     level = nullptr;
 }
 
 Entity::~Entity()
 {
-    if(sprite)
+    if(drawable)
     {
-        delete sprite;
+        delete drawable;
     }
 }
 
@@ -70,25 +70,25 @@ void Entity::debugDraw(sf::RenderTarget& target) const
     target.draw(frame, states);
 }
 
-sf::Sprite* Entity::getSprite()
+sf::Drawable* Entity::getDrawable()
 {
-    return sprite;
+    return drawable;
 }
 
-void Entity::setSprite(sf::Sprite* sprite)
+void Entity::setDrawable(sf::Drawable* drawable)
 {
-    if(this->sprite)
+    if(this->drawable)
     {
-        delete this->sprite;
+        delete this->drawable;
     }
-    this->sprite = sprite;
+    this->drawable = drawable;
 }
 
 void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    if(sprite)
+    if(drawable)
     {
         states.transform *= getTransform();
-        target.draw(*sprite, states);
+        target.draw(*drawable, states);
     }
 }

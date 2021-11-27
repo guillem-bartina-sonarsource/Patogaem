@@ -13,7 +13,7 @@ class Entity : public sf::Transformable, public sf::Drawable
 {
     public:
 
-    Entity(const sf::Vector2f& position, const sf::Vector2f& size, sf::Sprite* sprite = nullptr);
+    Entity(const sf::Vector2f& position, const sf::Vector2f& size, sf::Drawable* drawable = nullptr);
     ~Entity();
 
     sf::Vector2f getSize() const;
@@ -31,8 +31,8 @@ class Entity : public sf::Transformable, public sf::Drawable
 
     protected:
 
-    sf::Sprite* getSprite();
-    void setSprite(sf::Sprite* sprite);
+    sf::Drawable* getDrawable();
+    void setDrawable(sf::Drawable* drawable);
 
     Level* level;
     
@@ -44,7 +44,7 @@ class Entity : public sf::Transformable, public sf::Drawable
 
     sf::Vector2f size;
 
-    sf::Sprite* sprite;
+    sf::Drawable* drawable;
 
     static EntityRegistryNode* node;
     static unsigned int nextId;

@@ -3,6 +3,8 @@
 
 #include "Entity.h"
 
+// Virtual class which defines methods to operate a collection of wntities
+// that can have diferent implementatiuons
 class EntityCollection
 {
     public:

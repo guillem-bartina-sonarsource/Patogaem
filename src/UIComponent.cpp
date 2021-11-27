@@ -3,8 +3,8 @@
 
 #include "UIBox.h"
 
-UIComponent::UIComponent(EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size, sf::Sprite* sprite)
-: Entity(position, size, sprite),
+UIComponent::UIComponent(EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size, sf::Drawable* drawable)
+: Entity(position, size, drawable),
 align(align),
 fit(fit),
 parent(nullptr) {}
@@ -21,28 +21,30 @@ void UIComponent::setParent(UIBox* parent)
     float ratio = 1.f;
     switch(fit)
     {
-    case EUIFit::HORIZONTAL:
-        ratio = getSize().y / getSize().x;
-        setSize(sf::Vector2f(parent->getSize().x, parent->getSize().x * ratio));
-        break;
-    case EUIFit::VERTICAL:
-        ratio = getSize().y / getSize().x;
-        setSize(sf::Vector2f(parent->getSize().y / ratio, parent->getSize().y));
-        break;
-    case EUIFit::ADJUST:
-        setSize(parent->getSize());
-    case EUIFit::MAX:
-        ratio = getSize().y / getSize().x;
-        if(ratio <= 1.f)
-        {
+        case EUIFit::HORIZONTAL:
+            ratio = getSize().y / getSize().x;
             setSize(sf::Vector2f(parent->getSize().x, parent->getSize().x * ratio));
-        }
-        else
-        {
+            break;
+        case EUIFit::VERTICAL:
+            ratio = getSize().y / getSize().x;
             setSize(sf::Vector2f(parent->getSize().y / ratio, parent->getSize().y));
-        }
-    default:
-        break;
+            break;
+        case EUIFit::ADJUST:
+            setSize(parent->getSize());
+            break;
+        case EUIFit::MAX:
+            ratio = getSize().y / getSize().x;
+            if(ratio <= 1.f)
+            {
+                setSize(sf::Vector2f(parent->getSize().x, parent->getSize().x * ratio));
+            }
+            else
+            {
+                setSize(sf::Vector2f(parent->getSize().y / ratio, parent->getSize().y));
+            }
+            break;
+        default:
+            break;
     }
 
     sf::Vector2f sizeDiff = parent->getSize() - getSize();

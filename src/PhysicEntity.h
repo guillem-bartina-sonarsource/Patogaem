@@ -12,7 +12,7 @@ class PhysicEntity : public Entity
 {
     public:
 
-    PhysicEntity(const sf::Vector2f& position, const sf::Vector2f& size, sf::Sprite* sprite = nullptr);
+    PhysicEntity(const sf::Vector2f& position, const sf::Vector2f& size, sf::Drawable* drawable = nullptr);
     ~PhysicEntity();
 
     virtual void update(const sf::Time deltatime) override;

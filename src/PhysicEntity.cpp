@@ -1,8 +1,8 @@
 
 #include "PhysicEntity.h"
 
-PhysicEntity::PhysicEntity(const sf::Vector2f& position, const sf::Vector2f& size, sf::Sprite* sprite)
-: Entity(position, size, sprite)
+PhysicEntity::PhysicEntity(const sf::Vector2f& position, const sf::Vector2f& size, sf::Drawable* drawable)
+: Entity(position, size, drawable)
 {
     
 }
