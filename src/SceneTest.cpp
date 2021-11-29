@@ -5,6 +5,7 @@
 
 #include "TestEntity.h"
 #include "UIBox.h"
+#include "UIBorder.h"
 #include "UIRect.h"
 
 SceneTest::SceneTest() : IScene() {}
@@ -17,7 +18,7 @@ void SceneTest::init(Window::View* window)
     entity->levelize(&level);
 
     UIRect* rect = new UIRect(UIRectStyle::defaultStyle(), EUIAlign::TOPLEFT, EUIFit::ADJUST, sf::Vector2f(100, 100), sf::Vector2f(1, 1));
-    UIBox* box = new UIBox(sf::Vector2f(), sf::Vector2f(400, 400), rect);
+    UIBox* box = new UIBox(sf::Vector2f(100, 100), sf::Vector2f(400, 400), new UIBorder(UIBorderStyle{sf::Color::White, 5.f}, rect));
     box->levelize(&level);
 }
 

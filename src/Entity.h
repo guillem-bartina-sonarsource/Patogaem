@@ -31,7 +31,7 @@ class Entity : public sf::Transformable, public sf::Drawable
 
     protected:
 
-    sf::Drawable* getDrawable();
+    sf::Drawable* getDrawable() const;
     void setDrawable(sf::Drawable* drawable);
 
     Level* level;

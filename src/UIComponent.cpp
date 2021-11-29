@@ -51,7 +51,7 @@ void UIComponent::setParent(UIBox* parent)
 
     if(align != EUIAlign::EUIAlign_NONE)
     {
-        setPosition(parent->getPosition() + sf::Vector2f(sizeDiff.x * ((align-1) % 3), sizeDiff.y * ((align-1) / 3)) * 0.5f);
+        setPosition(sf::Vector2f(sizeDiff.x * ((align-1) % 3), sizeDiff.y * ((align-1) / 3)) * 0.5f);
     }
 
     this->parent = parent;

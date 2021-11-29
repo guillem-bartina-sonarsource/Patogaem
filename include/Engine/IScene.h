@@ -25,8 +25,6 @@ class IScene : private INonCopyable
 
     bool pollRequest(IScene*& scene, bool& replace);
 
-    void setWindowView(Window::View* windowView);
-
     protected:
 
     void changeScene(IScene* scene, bool replace = false);

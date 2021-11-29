@@ -70,7 +70,7 @@ void Entity::debugDraw(sf::RenderTarget& target) const
     target.draw(frame, states);
 }
 
-sf::Drawable* Entity::getDrawable()
+sf::Drawable* Entity::getDrawable() const
 {
     return drawable;
 }

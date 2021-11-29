@@ -18,7 +18,7 @@ class UIBox : public Entity
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
     UIComponent* content;
-
+    
 };
 
 #endif
