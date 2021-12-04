@@ -36,7 +36,7 @@ class UIComponent : public Entity
     ~UIComponent();
 
     UIBox* getParent();
-    void setParent(UIBox* parent);
+    virtual void setParent(UIBox* parent);
 
     virtual void handleEvents(const sf::Event& event);
 

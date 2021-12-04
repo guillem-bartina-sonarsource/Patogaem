@@ -58,16 +58,16 @@ bool Entity::operator<(const Entity& entity) const
     return (id < entity.id);
 }
 
-void Entity::debugDraw(sf::RenderTarget& target) const
-{
-    sf::RenderStates states = sf::RenderStates::Default;
-    states.transform *= getTransform();
-    
+sf::RectangleShape Entity::debug() const
+{  
     sf::RectangleShape frame(size);
     frame.setFillColor(sf::Color::Transparent);
     frame.setOutlineThickness(-1.f);
     frame.setOutlineColor(sf::Color::Magenta);
-    target.draw(frame, states);
+    frame.setPosition(getPosition());
+    frame.setScale(getScale());
+    frame.setRotation(getRotation());
+    return frame;
 }
 
 sf::Drawable* Entity::getDrawable() const

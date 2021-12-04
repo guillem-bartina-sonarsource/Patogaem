@@ -20,10 +20,13 @@ void SceneTest::init(Window::View* window)
     Entity* entity = new TestEntity(sf::Vector2f(100, 100));
     entity->levelize(&level);
 
-    //UIRect* rect = new UIRect(UIRectStyle::defaultStyle(), EUIAlign::TOPLEFT, EUIFit::ADJUST, sf::Vector2f(100, 100), sf::Vector2f(1, 1));
-    UILabel* label = new UILabel("HELLO", UILabelStyle::defaultStyle(*Resources::getInstance()->Font("fonts/font.ttf")), EUIAlign::TOPLEFT, EUIFit::HORIZONTAL, sf::Vector2f(), sf::Vector2f());
-    UIBox* box = new UIBox(sf::Vector2f(100, 100), sf::Vector2f(400, 400), new UIBorder(UIBorderStyle{sf::Color::White, 5.f}, label));
+    //UIRect* rect = new UIRect(UIRectStyle::defaultStyle(), EUIAlign::TOPLEFT, EUIFit::ADJUST, sf::Vector2f(), sf::Vector2f(100, 100));
+    //UIBox* box = new UIBox(sf::Vector2f(100, 100), sf::Vector2f(400, 400), rect);
+    UILabel* label = new UILabel("hello this a text", UILabelStyle::defaultStyle(*Resources::getInstance()->Font("fonts/font.ttf")), EUIAlign::TOPLEFT, EUIFit::EUIFit_NONE, sf::Vector2f(), sf::Vector2f());
+    UIBox* box = new UIBox(sf::Vector2f(100, 100), sf::Vector2f(400, 400), new UIBorder(UIBorderStyle{sf::Color::Red, 5.f, 10.f}, label));
     box->levelize(&level);
+
+    this->box = box;
 }
 
 void SceneTest::handleEvents(const sf::Event& event)
@@ -43,10 +46,12 @@ void SceneTest::handleEvents(const sf::Event& event)
                     break;
             }
         }
-            break;
+            break;        
         default:
             break;
     }
+
+    box->handleEvents(event);
 }
 
 void SceneTest::update(const sf::Time& deltatime)

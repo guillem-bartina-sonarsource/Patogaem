@@ -41,7 +41,8 @@ void Window::init()
         sf::View view(sf::FloatRect(0.f, 0.f, float(size.x), float(size.y)));
         view.setViewport(sf::FloatRect((1.f-ratiosRatio)/2.f, 0.f, ratiosRatio, 1.f));
         window.setView(view);
-        fullscreenXOffset = ((1.f-ratiosRatio)/2.f) * window.getSize().x;
+        fullscreenXOffset = ((1.f-ratiosRatio)/2.f) * float(window.getSize().x);
+        fullscreenSizeRatio = float(window.getSize().y) / float(size.y);
     }
     scene->init(new Window::View(this));
     clock.restart();
@@ -76,9 +77,13 @@ void Window::handleEvents()
                 case sf::Event::MouseButtonPressed:
                 case sf::Event::MouseButtonReleased:
                     event.mouseButton.x -= fullscreenXOffset;
+                    event.mouseButton.x /= fullscreenSizeRatio;
+                    event.mouseButton.y /= fullscreenSizeRatio;
                     break;
                 case sf::Event::MouseMoved:
                     event.mouseMove.x -= fullscreenXOffset;
+                    event.mouseMove.x /= fullscreenSizeRatio;
+                    event.mouseMove.y /= fullscreenSizeRatio;
                     break;
                 default:
                     break;

@@ -18,36 +18,37 @@ UIBox* UIComponent::getParent()
 
 void UIComponent::setParent(UIBox* parent)
 {
-    float ratio = 1.f;
+    float scale = 1.f;
     switch(fit)
     {
         case EUIFit::HORIZONTAL:
-            ratio = getSize().y / getSize().x;
-            setSize(sf::Vector2f(parent->getSize().x, parent->getSize().x * ratio));
+            scale = parent->getSize().x / getSize().x;
+            setScale(scale, scale);
             break;
         case EUIFit::VERTICAL:
-            ratio = getSize().y / getSize().x;
-            setSize(sf::Vector2f(parent->getSize().y / ratio, parent->getSize().y));
+            scale = parent->getSize().y / getSize().y;
+            setScale(scale, scale);
             break;
         case EUIFit::ADJUST:
-            setSize(parent->getSize());
+            setScale(parent->getSize().x / getSize().x, parent->getSize().y / getSize().y);
             break;
         case EUIFit::MAX:
-            ratio = getSize().y / getSize().x;
-            if(ratio <= 1.f)
+            if(getSize().y / getSize().x <= 1.f)
             {
-                setSize(sf::Vector2f(parent->getSize().x, parent->getSize().x * ratio));
+                scale = parent->getSize().x / getSize().x;
+                setScale(scale, scale);
             }
             else
             {
-                setSize(sf::Vector2f(parent->getSize().y / ratio, parent->getSize().y));
+                scale = parent->getSize().y / getSize().y;
+                setScale(scale, scale);
             }
             break;
         default:
             break;
     }
 
-    sf::Vector2f sizeDiff = parent->getSize() - getSize();
+    sf::Vector2f sizeDiff = parent->getSize() - sf::Vector2f(getSize().x * getScale().x, getSize().y * getScale().y);
 
     if(align != EUIAlign::EUIAlign_NONE)
     {

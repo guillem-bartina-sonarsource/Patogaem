@@ -17,7 +17,7 @@ struct UIRectStyle
     static UIRectStyle defaultStyle()
     {
         return {
-            .fillColor = sf::Color::Magenta,
+            .fillColor = sf::Color::Cyan,
             .outlineThickness = 0.f,
             .outlineColor = sf::Color::Black
         };
@@ -31,7 +31,9 @@ class UIRect : public UIComponent
     UIRect(UIRectStyle style, EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size);
     ~UIRect();
 
-    void setSize(const sf::Vector2f& size) override;
+    //void setSize(const sf::Vector2f& size) override;
+
+    void handleEvents(const sf::Event& event) override;
 
 };
 

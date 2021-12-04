@@ -17,11 +17,12 @@ UILabel::UILabel(const std::string& text, UILabelStyle style, EUIAlign align, EU
     label->setOutlineThickness(style.outlineThickness);
     label->setOutlineColor(style.outlineColor);
     sf::FloatRect textLocalBounds = label->getLocalBounds();
-    UIComponent::setSize(sf::Vector2f(textLocalBounds.width, textLocalBounds.height));
+    UIComponent::setSize(sf::Vector2f(textLocalBounds.width, style.characterSize));
 }
 
 UILabel::~UILabel() {}
 
+/*
 void UILabel::setSize(const sf::Vector2f& size)
 {
     sf::Vector2f prevSize = getSize();
@@ -29,3 +30,4 @@ void UILabel::setSize(const sf::Vector2f& size)
     //std::cout << "SCALING" << sf::Vector2f(size.x / prevSize.x, size.y / prevSize.y).x << " " << sf::Vector2f(prevSize.x / size.x, prevSize.y / size.y).y << std::endl;
     static_cast<sf::Text*>(getDrawable())->setScale(sf::Vector2f(size.x / prevSize.x, size.y / prevSize.y));
 }
+*/

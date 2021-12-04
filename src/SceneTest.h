@@ -7,6 +7,7 @@
 
 #include "Entity.h"
 #include "Level.h"
+#include "UIBox.h"
 
 class SceneTest : public IScene
 {
@@ -26,6 +27,8 @@ class SceneTest : public IScene
     private:
 
     Level level;
+
+    UIBox* box;
 
 };
 

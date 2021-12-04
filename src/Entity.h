@@ -27,7 +27,7 @@ class Entity : public sf::Transformable, public sf::Drawable
     bool operator==(const Entity& entity) const;
     bool operator<(const Entity& entity) const;
 
-    void debugDraw(sf::RenderTarget& target) const; // TEMPORAL
+    sf::RectangleShape debug() const;
 
     protected:
 

@@ -29,6 +29,7 @@ class Window : private INonCopyable
     bool isFullscreen;
     sf::Vector2u size;
     float fullscreenXOffset;
+    float fullscreenSizeRatio;
 
     sf::RenderWindow window;
 

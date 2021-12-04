@@ -1,6 +1,8 @@
 
 #include "UIRect.h"
 
+#include <iostream>
+
 #include "SFML/Graphics/RectangleShape.hpp"
 
 UIRect::UIRect(UIRectStyle style, EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size)
@@ -22,8 +24,22 @@ UIRect::UIRect(UIRectStyle style, EUIAlign align, EUIFit fit, const sf::Vector2f
 
 UIRect::~UIRect() {}
 
-void UIRect::setSize(const sf::Vector2f& size)
+void UIRect::handleEvents(const sf::Event& event)
 {
-    UIComponent::setSize(size);
-    static_cast<sf::RectangleShape*>(getDrawable())->setSize(size);
+    switch(event.type)
+    {
+        case sf::Event::MouseEntered:
+        {
+            static_cast<sf::RectangleShape*>(getDrawable())->setFillColor(sf::Color::Cyan);
+        }
+            break;
+        case sf::Event::MouseLeft:
+        {
+            static_cast<sf::RectangleShape*>(getDrawable())->setFillColor(sf::Color::Blue);
+        }
+            break;
+        default:
+            break;
+        // TODO: Add support for joysticks
+    }
 }

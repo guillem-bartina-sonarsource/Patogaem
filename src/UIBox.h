@@ -25,7 +25,7 @@ class UIBox : public Entity
 
     UIComponent* content;
 
-    bool mouseInside;
+    bool isMouseInside;
     
 };
 

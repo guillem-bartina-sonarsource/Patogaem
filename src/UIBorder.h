@@ -8,6 +8,7 @@ struct UIBorderStyle
 {
     sf::Color color;
     float thickness;
+    float padding = 0.f;
 
     static UIBorderStyle defaultStyle()
     {
@@ -25,13 +26,19 @@ class UIBorder : public UIComponent
     UIBorder(UIBorderStyle style, UIComponent* content);
     ~UIBorder();
 
-    void setSize(const sf::Vector2f& size) override;
+    void setParent(UIBox* parent) override;
+
+    //void setSize(const sf::Vector2f& size) override;
+
+    void handleEvents(const sf::Event& event) override;
 
     private:
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-    
-    float thickness;
+
+    UIComponent* content;
+
+    float offset;
 
     UIBox* inner;
 

@@ -1,12 +1,14 @@
 
 #include "UIBox.h"
 
+#include <iostream>
+
 UIBox::UIBox(const sf::Vector2f& position, const sf::Vector2f& size, UIComponent* content)
-: Entity(position, size)
+: Entity(position, size),
+content(content),
+isMouseInside(false)
 {
-    this->content = content;
     content->setParent(this);
-    mouseInside = false;
 }
 
 UIBox::~UIBox()
@@ -25,7 +27,7 @@ void UIBox::setSize(const sf::Vector2f& size)
 
 void UIBox::handleEvents(const sf::Event& event)
 {
-    if(mouseInside or event.type == sf::Event::MouseMoved)
+    if(isMouseInside or event.type == sf::Event::MouseMoved)
     {
         switch(event.type)
         {
@@ -33,7 +35,7 @@ void UIBox::handleEvents(const sf::Event& event)
             {
                 if(isInside(sf::Vector2f(event.mouseMove.x, event.mouseMove.y)))
                 {
-                    if(not mouseInside)
+                    if(not isMouseInside)
                     {
                         sf::Event mouseEntered;
                         mouseEntered.type = sf::Event::MouseEntered;
@@ -43,17 +45,17 @@ void UIBox::handleEvents(const sf::Event& event)
                     mouseMoved.mouseMove.x -= getPosition().x;
                     mouseMoved.mouseMove.y -= getPosition().y;
                     content->handleEvents(mouseMoved);
-                    mouseInside = true;
+                    isMouseInside = true;
                 }
                 else
                 {
-                    if(mouseInside)
+                    if(isMouseInside)
                     {
                         sf::Event mouseLeft;
                         mouseLeft.type = sf::Event::MouseLeft;
                         content->handleEvents(mouseLeft);
                     }
-                    mouseInside = false;
+                    isMouseInside = false;
                 }
             }
                 break;
@@ -83,7 +85,6 @@ void UIBox::handleEvents(const sf::Event& event)
                 break;
             default:
                 break;
-
             // TODO: Add support for joysticks
         }
     }
@@ -91,22 +92,21 @@ void UIBox::handleEvents(const sf::Event& event)
 
 void UIBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+    // Draw to texture
     sf::RenderTexture renderTexture;
     renderTexture.create(getSize().x, getSize().y);
 
-    sf::Transform newTransform(getTransform());
-    newTransform.translate(getPosition() * -1.f);
-    sf::RenderStates statesCopy(states);
     renderTexture.clear();
-    renderTexture.draw(*content, newTransform);
+    renderTexture.draw(*content, sf::RenderStates::Default);
 
+    // Draw textured rect
     sf::RectangleShape rect(getSize());
     rect.setTexture(&renderTexture.getTexture());
 
     states.transform *= getTransform();
     target.draw(rect, states);
 
-    /*
+    /* Old
     states.transform *= getTransform();
     target.draw(*content, states);
     */
@@ -114,5 +114,5 @@ void UIBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 bool UIBox::isInside(const sf::Vector2f& point)
 {
-    return (point.x >= getPosition().x) and (point.x <= getPosition().x + getSize().x) and (point.y >= getPosition().y) and (point.y <= getPosition().y + getSize().y);
+    return (point.x >= getPosition().x) and (point.x <= getPosition().x + getSize().x * getScale().x) and (point.y >= getPosition().y) and (point.y <= getPosition().y + getSize().y * getScale().y);
 }
