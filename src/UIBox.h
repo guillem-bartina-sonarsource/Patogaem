@@ -13,11 +13,19 @@ class UIBox : public Entity
 
     void setSize(const sf::Vector2f& size) override;
 
+    //Override levelize to add it to inputable entities
+
+    void handleEvents(const sf::Event& event);
+
     private:
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
+    bool isInside(const sf::Vector2f& point);
+
     UIComponent* content;
+
+    bool mouseInside;
     
 };
 

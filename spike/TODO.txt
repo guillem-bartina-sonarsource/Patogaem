@@ -64,3 +64,9 @@ Groupable en bodies que estiguin en una capa virttual,
 
 PatoFile per treballar amb fitcers generats per el joc (nivells, dialegs, menus, ...)?
 
+//-----
+
+Creaate Updatabe y Inputable inbterfaces?
+
+Create Style Inerface with getDefault?
+

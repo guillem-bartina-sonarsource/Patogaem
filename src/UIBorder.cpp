@@ -4,7 +4,7 @@
 #include "math.h"
 
 UIBorder::UIBorder(UIBorderStyle style, UIComponent* content)
-: UIComponent(EUIAlign::TOPLEFT, EUIFit::ADJUST, sf::Vector2f(), sf::Vector2f(1.f, 1.f), new sf::RectangleShape()),
+: UIComponent(EUIAlign::TOPLEFT, EUIFit::ADJUST, sf::Vector2f(), sf::Vector2f(), new sf::RectangleShape()),
 thickness(style.thickness)
 {
     sf::RectangleShape* rect =  static_cast<sf::RectangleShape*>(getDrawable());
@@ -12,7 +12,7 @@ thickness(style.thickness)
     rect->setOutlineThickness(-abs(style.thickness));
     rect->setOutlineColor(style.color);
 
-    inner = new UIBox(sf::Vector2f(), sf::Vector2f(1.f, 1.f), content);
+    inner = new UIBox(sf::Vector2f(), sf::Vector2f(), content);
 }
 
 UIBorder::~UIBorder()

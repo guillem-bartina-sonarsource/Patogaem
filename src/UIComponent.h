@@ -32,11 +32,13 @@ class UIComponent : public Entity
 {
     public:
 
-    UIComponent(EUIAlign align, EUIFit fit, const sf::Vector2f& position = sf::Vector2f(), const sf::Vector2f& size = sf::Vector2f(1.f, 1.f), sf::Drawable* drawable = nullptr);
+    UIComponent(EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size, sf::Drawable* drawable = nullptr);
     ~UIComponent();
 
     UIBox* getParent();
     void setParent(UIBox* parent);
+
+    virtual void handleEvents(const sf::Event& event);
 
     private:
 

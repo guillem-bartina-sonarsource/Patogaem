@@ -3,10 +3,13 @@
 
 #include "SFML/Graphics/RectangleShape.hpp"
 
+#include "Engine/Resources.h"
+
 #include "TestEntity.h"
 #include "UIBox.h"
 #include "UIBorder.h"
 #include "UIRect.h"
+#include "UILabel.h"
 
 SceneTest::SceneTest() : IScene() {}
 
@@ -17,8 +20,9 @@ void SceneTest::init(Window::View* window)
     Entity* entity = new TestEntity(sf::Vector2f(100, 100));
     entity->levelize(&level);
 
-    UIRect* rect = new UIRect(UIRectStyle::defaultStyle(), EUIAlign::TOPLEFT, EUIFit::ADJUST, sf::Vector2f(100, 100), sf::Vector2f(1, 1));
-    UIBox* box = new UIBox(sf::Vector2f(100, 100), sf::Vector2f(400, 400), new UIBorder(UIBorderStyle{sf::Color::White, 5.f}, rect));
+    //UIRect* rect = new UIRect(UIRectStyle::defaultStyle(), EUIAlign::TOPLEFT, EUIFit::ADJUST, sf::Vector2f(100, 100), sf::Vector2f(1, 1));
+    UILabel* label = new UILabel("HELLO", UILabelStyle::defaultStyle(*Resources::getInstance()->Font("fonts/font.ttf")), EUIAlign::TOPLEFT, EUIFit::HORIZONTAL, sf::Vector2f(), sf::Vector2f());
+    UIBox* box = new UIBox(sf::Vector2f(100, 100), sf::Vector2f(400, 400), new UIBorder(UIBorderStyle{sf::Color::White, 5.f}, label));
     box->levelize(&level);
 }
 

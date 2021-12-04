@@ -28,6 +28,10 @@ class Level
     //background.
     //class? image, tile (grid, sparse?) effects?
 
+    //List of entities --> For update
+    //List of layers of entitites/drawables --> to orgasnize draw
+    //List of inputabñe/entotoes
+
 };
 
 //Level view?

@@ -28,7 +28,7 @@ class UIRect : public UIComponent
 {
     public:
 
-    UIRect(UIRectStyle style, EUIAlign align, EUIFit fit, const sf::Vector2f& position = sf::Vector2f(), const sf::Vector2f& size = sf::Vector2f(1.f, 1.f));
+    UIRect(UIRectStyle style, EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size);
     ~UIRect();
 
     void setSize(const sf::Vector2f& size) override;
