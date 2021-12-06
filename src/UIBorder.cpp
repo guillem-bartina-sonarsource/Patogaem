@@ -22,6 +22,10 @@ UIBorder::~UIBorder()
 
 void UIBorder::setParent(UIBox* parent)
 {
+    if(inner)
+    {
+        delete inner;
+    }
     sf::Vector2f size = parent->getSize();
     UIComponent::setSize(size);
     static_cast<sf::RectangleShape*>(getDrawable())->setSize(size);

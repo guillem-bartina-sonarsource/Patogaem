@@ -8,11 +8,11 @@
 
 struct UIRectStyle
 {
-    sf::Texture* texture = nullptr;
-    std::optional<sf::IntRect> textureRect = std::nullopt;
     sf::Color fillColor;
     float outlineThickness;
     sf::Color outlineColor;
+    sf::Texture* texture = nullptr;
+    std::optional<sf::IntRect> textureRect = std::nullopt;
 
     static UIRectStyle defaultStyle()
     {
@@ -32,8 +32,6 @@ class UIRect : public UIComponent
     ~UIRect();
 
     //void setSize(const sf::Vector2f& size) override;
-
-    void handleEvents(const sf::Event& event) override;
 
 };
 

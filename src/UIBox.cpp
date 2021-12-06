@@ -4,7 +4,7 @@
 #include <iostream>
 
 UIBox::UIBox(const sf::Vector2f& position, const sf::Vector2f& size, UIComponent* content)
-: Entity(position, size),
+: UIComponent(EUIAlign::EUIAlign_NONE, EUIFit::EUIFit_NONE, position, size),
 content(content),
 isMouseInside(false)
 {
@@ -102,6 +102,7 @@ void UIBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
     // Draw textured rect
     sf::RectangleShape rect(getSize());
     rect.setTexture(&renderTexture.getTexture());
+    rect.setTextureRect(sf::IntRect(0, renderTexture.getTexture().getSize().y, renderTexture.getTexture().getSize().x, -renderTexture.getTexture().getSize().y));
 
     states.transform *= getTransform();
     target.draw(rect, states);

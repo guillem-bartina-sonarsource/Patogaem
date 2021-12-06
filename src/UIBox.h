@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "UIComponent.h"
 
-class UIBox : public Entity
+class UIBox : public UIComponent
 {
     public:
 
