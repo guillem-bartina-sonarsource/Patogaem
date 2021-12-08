@@ -84,6 +84,12 @@ bool UIBox::handleEvents(const sf::Event& event)
                 result = content->handleEvents(event);
             }
                 break;
+            case sf::Event::MouseLeft: //???, Why not entered?
+            {
+                result = content->handleEvents(event);
+                isMouseInside = false;
+            }
+                break;
             default:
                 break;
             // TODO: Add support for joysticks

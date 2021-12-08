@@ -53,4 +53,24 @@ class UIComponent : public Entity
 
 };
 
+
+class UIComponentSet : public UIComponent
+{
+    public:
+
+    UIComponentSet(const std::vector<UIComponent*>& components);
+    ~UIComponentSet();
+
+    void setParent(UIBox* parent) override;
+
+    bool handleEvents(const sf::Event& event) override;
+
+    private:
+
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+    std::vector<UIComponent*> components;
+
+};
+
 #endif

@@ -27,6 +27,7 @@ class UIButton : public UIComponent
 {
     public:
 
+    // Add Style
     UIButton(UICallback callback, EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size);
     ~UIButton();
 
@@ -34,9 +35,12 @@ class UIButton : public UIComponent
 
     private:
 
+    bool isInside(const sf::Vector2f& point);
+
     UICallback callback;
 
-    bool pressed;
+    bool mouseInside;
+    bool buttonPressed;
 
 };
 

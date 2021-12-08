@@ -42,7 +42,8 @@ class UICanvas : public UIComponent
 {
     public:
 
-    UICanvas(const sf::Vector2f& size, UICanvasStyle style, UIComponent* content);
+    //Make UICanvar parametrizabe in terms of position and size (UIComponent setParent stuff)
+    UICanvas(const sf::Vector2f& canvasSize, UICanvasStyle style, UIComponent* content);
     ~UICanvas();
 
     void setParent(UIBox* parent) override;
@@ -63,7 +64,7 @@ class UICanvas : public UIComponent
 
     void tryMove(EUICanvasDirection direction);
 
-    sf::Vector2f size;
+    sf::Vector2f canvasSize;
     UICanvasStyle style;
     UIComponent* content;
 

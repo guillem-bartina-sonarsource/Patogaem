@@ -6,7 +6,8 @@
 UIButton::UIButton(UICallback callback, EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size)
 : UIComponent(align, fit, position, size, new sf::RectangleShape(size)),
 callback(callback),
-pressed(false)
+mouseInside(false),
+buttonPressed(false)
 {
     sf::RectangleShape* rect =  static_cast<sf::RectangleShape*>(getDrawable());
     rect->setFillColor(sf::Color(120, 120, 120));
@@ -22,23 +23,44 @@ bool UIButton::handleEvents(const sf::Event& event)
     sf::RectangleShape* rect = static_cast<sf::RectangleShape*>(getDrawable());
     switch(event.type)
     {
+        case sf::Event::MouseMoved:
+        {
+            if(isInside(sf::Vector2f(event.mouseMove.x, event.mouseMove.y)))
+            {
+                if(not mouseInside)
+                {
+                    rect->setFillColor(sf::Color(140, 140, 140));
+                }
+                mouseInside = true;
+            }
+            else
+            {
+                if(mouseInside and not buttonPressed)
+                {
+                    rect->setFillColor(sf::Color(120, 120, 120));
+                }
+                mouseInside = false;
+            }
+            result = true;
+        }
+            break;
         case sf::Event::MouseButtonPressed:
         {
-            if(not pressed and rect->getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)))
+            if(mouseInside and not buttonPressed)
             {
                 rect->setFillColor(sf::Color(180, 180, 180));
-                pressed = true;
+                buttonPressed = true;
             }
             result = true;
         }
             break;
         case sf::Event::MouseButtonReleased:
         {
-            if(pressed)
+            if(buttonPressed)
             {
                 rect->setFillColor(sf::Color(120, 120, 120));
-                pressed = false;
-                if(rect->getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)))
+                buttonPressed = false;
+                if(mouseInside)
                 {
                     callback();
                 }
@@ -48,10 +70,11 @@ bool UIButton::handleEvents(const sf::Event& event)
             break;
         case sf::Event::MouseLeft:
         {
-            if(pressed)
+            if(mouseInside or buttonPressed)
             {
                 rect->setFillColor(sf::Color(120, 120, 120));
-                pressed = false;
+                mouseInside = false;
+                buttonPressed = false;
             }
             result = false;
         }
@@ -60,4 +83,9 @@ bool UIButton::handleEvents(const sf::Event& event)
             break;
     }
     return result;
+}
+
+bool UIButton::isInside(const sf::Vector2f& point)
+{
+    return (point.x >= getPosition().x) and (point.x <= getPosition().x + getSize().x * getScale().x) and (point.y >= getPosition().y) and (point.y <= getPosition().y + getSize().y * getScale().y);
 }
