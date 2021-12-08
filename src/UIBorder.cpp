@@ -33,9 +33,9 @@ void UIBorder::setParent(UIBox* parent)
     UIComponent::setParent(parent);
 }
 
-void UIBorder::handleEvents(const sf::Event& event)
+bool UIBorder::handleEvents(const sf::Event& event)
 {
-    inner->handleEvents(event);
+    return inner->handleEvents(event);
 }
 
 void UIBorder::draw(sf::RenderTarget& target, sf::RenderStates states) const

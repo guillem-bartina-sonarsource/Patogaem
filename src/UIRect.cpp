@@ -1,8 +1,6 @@
 
 #include "UIRect.h"
 
-#include <iostream>
-
 #include "SFML/Graphics/RectangleShape.hpp"
 
 UIRect::UIRect(UIRectStyle style, EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size)

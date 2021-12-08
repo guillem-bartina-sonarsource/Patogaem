@@ -45,14 +45,9 @@ class UICanvas : public UIComponent
     UICanvas(const sf::Vector2f& size, UICanvasStyle style, UIComponent* content);
     ~UICanvas();
 
-    //get size of content if fit H or fit V then scale it, otehgrwise check if any axis need slider and
-    // add the necesary sliders
-
     void setParent(UIBox* parent) override;
 
-    //void setSize(const sf::Vector2f& size) override;
-
-    void handleEvents(const sf::Event& event) override;
+    bool handleEvents(const sf::Event& event) override;
 
     private:
 
@@ -73,6 +68,8 @@ class UICanvas : public UIComponent
     UIComponent* content;
 
     UIBox* inner;
+    bool verticalSlider, horizontalSlider;
+    bool showVerticalSlider, showHorizontalSlider;
     sf::Vector2f offset, maxOffset;
     UIBox* canvas;
 

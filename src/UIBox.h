@@ -15,7 +15,7 @@ class UIBox : public UIComponent
 
     //Override levelize to add it to inputable entities
 
-    void handleEvents(const sf::Event& event);
+    bool handleEvents(const sf::Event& event) override;
 
     private:
 

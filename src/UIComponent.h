@@ -1,6 +1,8 @@
 #ifndef UICOMPONENT_HPP
 #define UICOMPONENT_HPP
 
+#include <functional>
+
 #include "Entity.h"
 
 enum EUIAlign
@@ -26,6 +28,8 @@ enum EUIFit
     MAX
 };
 
+typedef std::function<void()> UICallback;
+
 class UIBox;
 
 class UIComponent : public Entity
@@ -38,7 +42,7 @@ class UIComponent : public Entity
     UIBox* getParent();
     virtual void setParent(UIBox* parent);
 
-    virtual void handleEvents(const sf::Event& event);
+    virtual bool handleEvents(const sf::Event& event);
 
     private:
 

@@ -30,7 +30,7 @@ class UIBorder : public UIComponent
 
     //void setSize(const sf::Vector2f& size) override;
 
-    void handleEvents(const sf::Event& event) override;
+    bool handleEvents(const sf::Event& event) override;
 
     private:
 

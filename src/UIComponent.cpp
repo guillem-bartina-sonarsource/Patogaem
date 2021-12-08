@@ -58,4 +58,7 @@ void UIComponent::setParent(UIBox* parent)
     this->parent = parent;
 }
 
-void UIComponent::handleEvents(const sf::Event& event) {}
+bool UIComponent::handleEvents(const sf::Event& event)
+{
+    return false;
+}

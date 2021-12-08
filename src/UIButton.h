@@ -1,11 +1,10 @@
-#ifndef UIRECT_HPP
-#define UIRECT_HPP
-
-#include <optional>
+#ifndef UIBUTTON_HPP
+#define UIBUTTON_HPP
 
 #include "UIComponent.h"
 
-struct UIRectStyle
+/*
+struct UIButtonStyle
 {
     sf::Color fillColor;
     float outlineThickness;
@@ -13,7 +12,7 @@ struct UIRectStyle
     sf::Texture* texture = nullptr;
     std::optional<sf::IntRect> textureRect = std::nullopt;
 
-    static UIRectStyle defaultStyle()
+    static UIButtonStyle defaultStyle()
     {
         return {
             .fillColor = sf::Color::Cyan,
@@ -22,13 +21,22 @@ struct UIRectStyle
         };
     }
 };
+*/
 
-class UIRect : public UIComponent
+class UIButton : public UIComponent
 {
     public:
 
-    UIRect(UIRectStyle style, EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size);
-    ~UIRect();
+    UIButton(UICallback callback, EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size);
+    ~UIButton();
+
+    bool handleEvents(const sf::Event& event) override;
+
+    private:
+
+    UICallback callback;
+
+    bool pressed;
 
 };
 
