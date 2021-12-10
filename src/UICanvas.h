@@ -50,6 +50,10 @@ class UICanvas : public UIComponent
 
     bool handleEvents(const sf::Event& event) override;
 
+    protected:
+
+    UIComponent* content;
+
     private:
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -66,8 +70,7 @@ class UICanvas : public UIComponent
 
     sf::Vector2f canvasSize;
     UICanvasStyle style;
-    UIComponent* content;
-
+    
     UIBox* inner;
     bool verticalSlider, horizontalSlider;
     bool showVerticalSlider, showHorizontalSlider;

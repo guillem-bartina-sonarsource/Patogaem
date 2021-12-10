@@ -1,18 +1,21 @@
 
 #include "UIButton.h"
 
+#include <math.h>
+
 #include "SFML/Graphics/RectangleShape.hpp"
 
-UIButton::UIButton(UICallback callback, EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size)
+UIButton::UIButton(UIButtonStyle style, UICallback callback, EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size)
 : UIComponent(align, fit, position, size, new sf::RectangleShape(size)),
+style(style),
 callback(callback),
 mouseInside(false),
 buttonPressed(false)
 {
     sf::RectangleShape* rect =  static_cast<sf::RectangleShape*>(getDrawable());
-    rect->setFillColor(sf::Color(120, 120, 120));
-    rect->setOutlineThickness(-2.f);
-    rect->setOutlineColor(sf::Color(200, 200, 200));
+    rect->setFillColor(style.fillColor);
+    rect->setOutlineThickness(-abs(style.outlineThickness));
+    rect->setOutlineColor(style.outlineColor);
 }
 
 UIButton::~UIButton() {}
@@ -29,7 +32,7 @@ bool UIButton::handleEvents(const sf::Event& event)
             {
                 if(not mouseInside)
                 {
-                    rect->setFillColor(sf::Color(140, 140, 140));
+                    rect->setFillColor(sf::Color(style.hoveringFillColor));
                 }
                 mouseInside = true;
             }
@@ -37,7 +40,7 @@ bool UIButton::handleEvents(const sf::Event& event)
             {
                 if(mouseInside and not buttonPressed)
                 {
-                    rect->setFillColor(sf::Color(120, 120, 120));
+                    rect->setFillColor(sf::Color(style.fillColor));
                 }
                 mouseInside = false;
             }
@@ -48,7 +51,7 @@ bool UIButton::handleEvents(const sf::Event& event)
         {
             if(mouseInside and not buttonPressed)
             {
-                rect->setFillColor(sf::Color(180, 180, 180));
+                rect->setFillColor(style.clickedFillColor);
                 buttonPressed = true;
             }
             result = true;
@@ -58,11 +61,15 @@ bool UIButton::handleEvents(const sf::Event& event)
         {
             if(buttonPressed)
             {
-                rect->setFillColor(sf::Color(120, 120, 120));
                 buttonPressed = false;
                 if(mouseInside)
                 {
                     callback();
+                    rect->setFillColor(style.hoveringFillColor);
+                }
+                else
+                {
+                    rect->setFillColor(style.fillColor);
                 }
             }
             result = true;
@@ -72,7 +79,7 @@ bool UIButton::handleEvents(const sf::Event& event)
         {
             if(mouseInside or buttonPressed)
             {
-                rect->setFillColor(sf::Color(120, 120, 120));
+                rect->setFillColor(style.fillColor);
                 mouseInside = false;
                 buttonPressed = false;
             }

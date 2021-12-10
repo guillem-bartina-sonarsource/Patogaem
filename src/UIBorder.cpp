@@ -41,6 +41,6 @@ bool UIBorder::handleEvents(const sf::Event& event)
 void UIBorder::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
-    target.draw(*getDrawable(), states);
     target.draw(*inner, states);
+    target.draw(*getDrawable(), states);
 }

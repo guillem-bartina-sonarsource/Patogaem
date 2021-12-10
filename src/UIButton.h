@@ -3,32 +3,32 @@
 
 #include "UIComponent.h"
 
-/*
 struct UIButtonStyle
 {
     sf::Color fillColor;
+    sf::Color hoveringFillColor;
+    sf::Color clickedFillColor;
     float outlineThickness;
     sf::Color outlineColor;
-    sf::Texture* texture = nullptr;
-    std::optional<sf::IntRect> textureRect = std::nullopt;
 
     static UIButtonStyle defaultStyle()
     {
         return {
-            .fillColor = sf::Color::Cyan,
-            .outlineThickness = 0.f,
-            .outlineColor = sf::Color::Black
+            .fillColor = sf::Color(100, 0, 0),
+            .hoveringFillColor = sf::Color(160, 0, 0),
+            .clickedFillColor = sf::Color(220, 0, 0),
+            .outlineThickness = 1.f,
+            .outlineColor = sf::Color(255, 0, 0)
         };
     }
 };
-*/
 
 class UIButton : public UIComponent
 {
     public:
 
     // Add Style
-    UIButton(UICallback callback, EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size);
+    UIButton(UIButtonStyle style, UICallback callback, EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size);
     ~UIButton();
 
     bool handleEvents(const sf::Event& event) override;
@@ -37,6 +37,7 @@ class UIButton : public UIComponent
 
     bool isInside(const sf::Vector2f& point);
 
+    UIButtonStyle style;
     UICallback callback;
 
     bool mouseInside;

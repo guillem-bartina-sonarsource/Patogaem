@@ -33,13 +33,23 @@ void UICanvas::setParent(UIBox* parent)
     sf::Vector2f parentSize = parent->getSize();
     UIComponent::setSize(parentSize);
 
-    verticalSlider = canvasSize.y > parentSize.y;
-    horizontalSlider = canvasSize.x > parentSize.x;
+    verticalSlider = canvasSize.y != -1.f and (canvasSize.y > parentSize.y or (canvasSize.x > parentSize.x and canvasSize.y > parentSize.y - style.sliderThickness and style.verticalSliderPosition != EUICanvasVerticalSliderPosition::EUICanvasVerticalSliderPosition_NONE));
+    horizontalSlider = canvasSize.x != -1.f and (canvasSize.x > parentSize.x or (canvasSize.y > parentSize.y and canvasSize.x > parentSize.x - style.sliderThickness and style.horizontalSliderPosition != EUICanvasHorizontalSliderPosition::EUICanvasHorizontalSliderPosition_NONE));
 
     showVerticalSlider = verticalSlider and style.verticalSliderPosition != EUICanvasVerticalSliderPosition::EUICanvasVerticalSliderPosition_NONE;
     showHorizontalSlider = horizontalSlider and style.horizontalSliderPosition != EUICanvasHorizontalSliderPosition::EUICanvasHorizontalSliderPosition_NONE;
 
-    sf::Vector2f boxPosition = sf::Vector2f(int(verticalSlider) * int(style.verticalSliderPosition == EUICanvasVerticalSliderPosition::LEFT) * style.sliderThickness, int(horizontalSlider) * int(style.horizontalSliderPosition == EUICanvasHorizontalSliderPosition::TOP) * style.sliderThickness);
+    sf::Vector2f canvasSize(this->canvasSize);
+    if(canvasSize.x == -1.f)
+    {
+        canvasSize.x = parentSize.x - style.sliderThickness * int(showVerticalSlider);
+    }
+    if(canvasSize.y == -1.f)
+    {
+        canvasSize.y = parentSize.y - style.sliderThickness * int(showHorizontalSlider);
+    }
+
+    sf::Vector2f boxPosition = sf::Vector2f(int(showVerticalSlider) * int(style.verticalSliderPosition == EUICanvasVerticalSliderPosition::LEFT) * style.sliderThickness, int(showHorizontalSlider) * int(style.horizontalSliderPosition == EUICanvasHorizontalSliderPosition::TOP) * style.sliderThickness);
     sf::Vector2f boxSize = sf::Vector2f(std::min(canvasSize.x, parentSize.x - style.sliderThickness * int(showVerticalSlider)), std::min(canvasSize.y, parentSize.y - style.sliderThickness * int(showHorizontalSlider)));
 
     canvas = new UIBox(sf::Vector2f(), canvasSize, content);
@@ -122,12 +132,12 @@ void UICanvas::draw(sf::RenderTarget& target, sf::RenderStates states) const
     if(showVerticalSlider)
     {
         sf::RectangleShape verticalSlider(sf::Vector2f(style.sliderThickness, inner->getSize().y));
-        verticalSlider.setFillColor(sf::Color::White);
+        verticalSlider.setFillColor(sf::Color(60, 60, 60));
         verticalSlider.setPosition(sf::Vector2f(int(style.verticalSliderPosition == EUICanvasVerticalSliderPosition::RIGHT) * (getSize().x - style.sliderThickness), inner->getPosition().y));
         target.draw(verticalSlider, states);
 
         sf::RectangleShape verticalThumb(sf::Vector2f(style.sliderThickness, (inner->getSize().y * inner->getSize().y / canvasSize.y)));
-        verticalThumb.setFillColor(sf::Color(140, 140, 140));
+        verticalThumb.setFillColor(sf::Color(180, 180, 180));
         verticalThumb.setOutlineThickness(-1.f);
         verticalThumb.setOutlineColor(sf::Color(200, 200, 200));
         verticalThumb.setPosition(sf::Vector2f(int(style.verticalSliderPosition == EUICanvasVerticalSliderPosition::RIGHT) * (getSize().x - style.sliderThickness), inner->getPosition().y + (inner->getSize().y - verticalThumb.getSize().y) * (offset.y / maxOffset.y)));
@@ -137,12 +147,12 @@ void UICanvas::draw(sf::RenderTarget& target, sf::RenderStates states) const
     if(showHorizontalSlider)
     {
         sf::RectangleShape horizontalSlider(sf::Vector2f(inner->getSize().x, style.sliderThickness));
-        horizontalSlider.setFillColor(sf::Color::White);
+        horizontalSlider.setFillColor(sf::Color(60, 60, 60));
         horizontalSlider.setPosition(sf::Vector2f(inner->getPosition().x, int(style.horizontalSliderPosition == EUICanvasHorizontalSliderPosition::BOTTOM) * (getSize().y - style.sliderThickness)));
         target.draw(horizontalSlider, states);
 
         sf::RectangleShape horizontalThumb(sf::Vector2f((inner->getSize().x * inner->getSize().x / canvasSize.x), style.sliderThickness));
-        horizontalThumb.setFillColor(sf::Color(140, 140, 140));
+        horizontalThumb.setFillColor(sf::Color(180, 180, 180));
         horizontalThumb.setOutlineThickness(-1.f);
         horizontalThumb.setOutlineColor(sf::Color(200, 200, 200));
         horizontalThumb.setPosition(sf::Vector2f(inner->getPosition().x + (inner->getSize().x - horizontalThumb.getSize().x) * (offset.x / maxOffset.x), int(style.horizontalSliderPosition == EUICanvasHorizontalSliderPosition::BOTTOM) * (getSize().y - style.sliderThickness)));
@@ -152,7 +162,7 @@ void UICanvas::draw(sf::RenderTarget& target, sf::RenderStates states) const
     if(showVerticalSlider and showHorizontalSlider)
     {
         sf::RectangleShape corner(sf::Vector2f(style.sliderThickness, style.sliderThickness));
-        corner.setFillColor(sf::Color(140, 140, 140));
+        corner.setFillColor(sf::Color(180, 180, 180));
         corner.setPosition(sf::Vector2f(int(style.verticalSliderPosition == EUICanvasVerticalSliderPosition::RIGHT) * (getSize().x - style.sliderThickness), int(style.horizontalSliderPosition == EUICanvasHorizontalSliderPosition::BOTTOM) * (getSize().y - style.sliderThickness)));
         target.draw(corner, states);
     }
@@ -164,33 +174,61 @@ void UICanvas::tryMove(EUICanvasDirection direction)
     {
         case EUICanvasDirection::DIR_UP:
         {
-            if(verticalSlider and offset.y >= style.scrollSensitivity)
+            if(verticalSlider)
             {
-                offset.y -= style.scrollSensitivity;
+                if(offset.y >= style.scrollSensitivity)
+                {
+                    offset.y -= style.scrollSensitivity;
+                }
+                else if(offset.y > 0.f)
+                {
+                    offset.y = 0.f;
+                }
             }
         }
             break;
         case EUICanvasDirection::DIR_DOWN:
         {
-            if(verticalSlider and offset.y < maxOffset.y - style.scrollSensitivity)
+            if(verticalSlider)
             {
-                offset.y += style.scrollSensitivity;
+                if(offset.y <= maxOffset.y - style.scrollSensitivity)
+                {
+                    offset.y += style.scrollSensitivity;
+                }
+                else if(offset.y < maxOffset.y)
+                {
+                    offset.y = maxOffset.y;
+                }
             }
         }
             break;
         case EUICanvasDirection::DIR_LEFT:
         {
-            if(horizontalSlider and offset.x >= style.scrollSensitivity)
+            if(horizontalSlider)
             {
-                offset.x -= style.scrollSensitivity;
+                if(offset.x >= style.scrollSensitivity)
+                {
+                    offset.x -= style.scrollSensitivity;
+                }
+                else if(offset.x > 0.f)
+                {
+                    offset.x = 0.f;
+                }
             }
         }
             break;
         case EUICanvasDirection::DIR_RIGHT:
         {
-            if(horizontalSlider and offset.x < maxOffset.x - style.scrollSensitivity)
+            if(horizontalSlider)
             {
-                offset.x += style.scrollSensitivity;
+                if(offset.x <= maxOffset.x - style.scrollSensitivity)
+                {
+                    offset.x += style.scrollSensitivity;
+                }
+                else if(offset.x < maxOffset.x)
+                {
+                    offset.x = maxOffset.x;
+                }
             }
         }
             break;

@@ -32,6 +32,8 @@ class UILabel : public UIComponent
     UILabel(const std::string& text, UILabelStyle style, EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size);
     ~UILabel();
 
+    // void setSize(const sf::Vector2f& size) override;
+
 };
 
 #endif
