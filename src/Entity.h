@@ -16,7 +16,7 @@ class Entity : public sf::Transformable, public sf::Drawable
     Entity(const sf::Vector2f& position, const sf::Vector2f& size, sf::Drawable* drawable = nullptr);
     ~Entity();
 
-    sf::Vector2f getSize() const;
+    virtual sf::Vector2f getSize() const;
     virtual void setSize(const sf::Vector2f& size);
 
     virtual void update(const sf::Time deltatime);

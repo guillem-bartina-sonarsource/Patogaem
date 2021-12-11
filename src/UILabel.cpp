@@ -22,12 +22,7 @@ UILabel::UILabel(const std::string& text, UILabelStyle style, EUIAlign align, EU
 
 UILabel::~UILabel() {}
 
-/*
 void UILabel::setSize(const sf::Vector2f& size)
 {
-    sf::Vector2f prevSize = getSize();
-    UIComponent::setSize(size);
-    //std::cout << "SCALING" << sf::Vector2f(size.x / prevSize.x, size.y / prevSize.y).x << " " << sf::Vector2f(prevSize.x / size.x, prevSize.y / size.y).y << std::endl;
-    static_cast<sf::Text*>(getDrawable())->setScale(sf::Vector2f(size.x / prevSize.x, size.y / prevSize.y));
+    std::cerr << "UILabel::setSize has no effect" << std::endl;
 }
-*/

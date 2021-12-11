@@ -46,7 +46,7 @@ class UICanvas : public UIComponent
     UICanvas(const sf::Vector2f& canvasSize, UICanvasStyle style, UIComponent* content);
     ~UICanvas();
 
-    void setParent(UIBox* parent) override;
+    void setSize(const sf::Vector2f& size) override;
 
     bool handleEvents(const sf::Event& event) override;
 

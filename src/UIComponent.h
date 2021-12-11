@@ -39,6 +39,8 @@ class UIComponent : public Entity
     UIComponent(EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size, sf::Drawable* drawable = nullptr);
     ~UIComponent();
 
+    sf::Vector2f getSize() const override;
+
     UIBox* getParent();
     virtual void setParent(UIBox* parent);
 

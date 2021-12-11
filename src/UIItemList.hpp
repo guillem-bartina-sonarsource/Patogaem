@@ -42,7 +42,7 @@ class UIItemList : public UICanvas
     UIItemList(EUIItemListOrientation orientation, float itemLength, std::function<UIComponent*(ItemClass)> itemBuilder, const std::vector<ItemClass>& items);
     ~UIItemList();
 
-    void setParent(UIBox* parent) override;
+    void setSize(const sf::Vector2f& size) override;
 
     private:
 
@@ -67,27 +67,27 @@ template<class ItemClass>
 UIItemList<ItemClass>::~UIItemList() {}
 
 template<class ItemClass>
-void UIItemList<ItemClass>::setParent(UIBox* parent)
+void UIItemList<ItemClass>::setSize(const sf::Vector2f& size)
 {
     std::vector<UIComponent*> boxedItems;
     if(orientation == EUIItemListOrientation::EUIItemListOrientation_VERTICAL)
     {
         for(unsigned int i = 0; i < builtItems.size(); i++)
         {
-            boxedItems.push_back(new UIBox(sf::Vector2f(0.f, i * itemLength), sf::Vector2f(parent->getSize().x - 10.f, itemLength), builtItems[i]));
+            boxedItems.push_back(new UIBox(sf::Vector2f(0.f, i * itemLength), sf::Vector2f(size.x - 10.f, itemLength), builtItems[i]));
         }
     }
     else if(orientation == EUIItemListOrientation::EUIItemListOrientation_HORIZONTAL)
     {
         for(unsigned int i = 0; i < builtItems.size(); i++)
         {
-            boxedItems.push_back(new UIBox(sf::Vector2f(i * itemLength, 0.f), sf::Vector2f(itemLength, parent->getSize().y - 10.f), builtItems[i]));
+            boxedItems.push_back(new UIBox(sf::Vector2f(i * itemLength, 0.f), sf::Vector2f(itemLength, size.y - 10.f), builtItems[i]));
         }
     }
 
     content = new UIComponentSet(boxedItems);
-    
-    UICanvas::setParent(parent);
+
+    UICanvas::setSize(size);
 }
 
 #endif

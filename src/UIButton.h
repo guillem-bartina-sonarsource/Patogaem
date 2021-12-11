@@ -23,6 +23,8 @@ struct UIButtonStyle
     }
 };
 
+// Allow to wrtie text or draw a texture on the button
+
 class UIButton : public UIComponent
 {
     public:
@@ -30,6 +32,8 @@ class UIButton : public UIComponent
     // Add Style
     UIButton(UIButtonStyle style, UICallback callback, EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size);
     ~UIButton();
+
+    void setSize(const sf::Vector2f& size) override;
 
     bool handleEvents(const sf::Event& event) override;
 

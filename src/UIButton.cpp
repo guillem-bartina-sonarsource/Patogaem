@@ -20,6 +20,12 @@ buttonPressed(false)
 
 UIButton::~UIButton() {}
 
+void UIButton::setSize(const sf::Vector2f& size)
+{
+    static_cast<sf::RectangleShape*>(getDrawable())->setSize(size);
+    UIComponent::setSize(size);
+}
+
 bool UIButton::handleEvents(const sf::Event& event)
 {
     bool result = false;

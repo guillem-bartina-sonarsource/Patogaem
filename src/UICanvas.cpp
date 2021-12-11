@@ -7,7 +7,7 @@
 #include "UIRect.h"
 
 UICanvas::UICanvas(const sf::Vector2f& canvasSize, UICanvasStyle style, UIComponent* content)
-: UIComponent(EUIAlign::EUIAlign_NONE, EUIFit::EUIFit_NONE, sf::Vector2f(), sf::Vector2f()),
+: UIComponent(EUIAlign::EUIAlign_NONE, EUIFit::EUIFit_NONE, sf::Vector2f(), sf::Vector2f(-1.f, -1.f)),
 canvasSize(canvasSize),
 style(style),
 content(content),
@@ -23,18 +23,16 @@ canvas(nullptr)
 
 UICanvas::~UICanvas() {}
 
-void UICanvas::setParent(UIBox* parent)
+void UICanvas::setSize(const sf::Vector2f& size)
 {
     if(inner or canvas)
     {
         delete inner;
         delete canvas;
     }
-    sf::Vector2f parentSize = parent->getSize();
-    UIComponent::setSize(parentSize);
-
-    verticalSlider = canvasSize.y != -1.f and (canvasSize.y > parentSize.y or (canvasSize.x > parentSize.x and canvasSize.y > parentSize.y - style.sliderThickness and style.verticalSliderPosition != EUICanvasVerticalSliderPosition::EUICanvasVerticalSliderPosition_NONE));
-    horizontalSlider = canvasSize.x != -1.f and (canvasSize.x > parentSize.x or (canvasSize.y > parentSize.y and canvasSize.x > parentSize.x - style.sliderThickness and style.horizontalSliderPosition != EUICanvasHorizontalSliderPosition::EUICanvasHorizontalSliderPosition_NONE));
+    
+    verticalSlider = canvasSize.y != -1.f and (canvasSize.y > size.y or (canvasSize.x > size.x and canvasSize.y > size.y - style.sliderThickness and style.verticalSliderPosition != EUICanvasVerticalSliderPosition::EUICanvasVerticalSliderPosition_NONE));
+    horizontalSlider = canvasSize.x != -1.f and (canvasSize.x > size.x or (canvasSize.y > size.y and canvasSize.x > size.x - style.sliderThickness and style.horizontalSliderPosition != EUICanvasHorizontalSliderPosition::EUICanvasHorizontalSliderPosition_NONE));
 
     showVerticalSlider = verticalSlider and style.verticalSliderPosition != EUICanvasVerticalSliderPosition::EUICanvasVerticalSliderPosition_NONE;
     showHorizontalSlider = horizontalSlider and style.horizontalSliderPosition != EUICanvasHorizontalSliderPosition::EUICanvasHorizontalSliderPosition_NONE;
@@ -42,22 +40,22 @@ void UICanvas::setParent(UIBox* parent)
     sf::Vector2f canvasSize(this->canvasSize);
     if(canvasSize.x == -1.f)
     {
-        canvasSize.x = parentSize.x - style.sliderThickness * int(showVerticalSlider);
+        canvasSize.x = size.x - style.sliderThickness * int(showVerticalSlider);
     }
     if(canvasSize.y == -1.f)
     {
-        canvasSize.y = parentSize.y - style.sliderThickness * int(showHorizontalSlider);
+        canvasSize.y = size.y - style.sliderThickness * int(showHorizontalSlider);
     }
 
     sf::Vector2f boxPosition = sf::Vector2f(int(showVerticalSlider) * int(style.verticalSliderPosition == EUICanvasVerticalSliderPosition::LEFT) * style.sliderThickness, int(showHorizontalSlider) * int(style.horizontalSliderPosition == EUICanvasHorizontalSliderPosition::TOP) * style.sliderThickness);
-    sf::Vector2f boxSize = sf::Vector2f(std::min(canvasSize.x, parentSize.x - style.sliderThickness * int(showVerticalSlider)), std::min(canvasSize.y, parentSize.y - style.sliderThickness * int(showHorizontalSlider)));
+    sf::Vector2f boxSize = sf::Vector2f(std::min(canvasSize.x, size.x - style.sliderThickness * int(showVerticalSlider)), std::min(canvasSize.y, size.y - style.sliderThickness * int(showHorizontalSlider)));
 
     canvas = new UIBox(sf::Vector2f(), canvasSize, content);
     inner = new UIBox(boxPosition, boxSize, canvas);
 
     maxOffset = canvasSize - boxSize;
 
-    UIComponent::setParent(parent);
+    UIComponent::setSize(size);
 }
 
 bool UICanvas::handleEvents(const sf::Event& event)

@@ -21,3 +21,9 @@ UIRect::UIRect(UIRectStyle style, EUIAlign align, EUIFit fit, const sf::Vector2f
 }
 
 UIRect::~UIRect() {}
+
+void UIRect::setSize(const sf::Vector2f& size)
+{
+    static_cast<sf::RectangleShape*>(getDrawable())->setSize(size);
+    UIComponent::setSize(size);
+}

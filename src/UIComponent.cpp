@@ -11,6 +11,23 @@ parent(nullptr) {}
 
 UIComponent::~UIComponent() {}
 
+sf::Vector2f UIComponent::getSize() const
+{
+    sf::Vector2f size(Entity::getSize());
+    if(parent)
+    {
+        if(size.x == -1.f)
+        {
+            size.x = parent->getSize().x;
+        }
+        if(size.y == -1.f)
+        {
+            size.y = parent->getSize().y;
+        }
+    }
+    return size;
+}
+
 UIBox* UIComponent::getParent()
 {
     return parent;
@@ -18,6 +35,10 @@ UIBox* UIComponent::getParent()
 
 void UIComponent::setParent(UIBox* parent)
 {
+    this->parent = parent;
+
+    setSize(getSize());
+
     float scale = 1.f;
     switch(fit)
     {
@@ -54,8 +75,6 @@ void UIComponent::setParent(UIBox* parent)
     {
         setPosition(sf::Vector2f(sizeDiff.x * ((align-1) % 3), sizeDiff.y * ((align-1) / 3)) * 0.5f);
     }
-
-    this->parent = parent;
 }
 
 bool UIComponent::handleEvents(const sf::Event& event)

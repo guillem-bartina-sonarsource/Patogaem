@@ -26,9 +26,7 @@ class UIBorder : public UIComponent
     UIBorder(UIBorderStyle style, UIComponent* content);
     ~UIBorder();
 
-    void setParent(UIBox* parent) override;
-
-    //void setSize(const sf::Vector2f& size) override;
+    void setSize(const sf::Vector2f& size) override;
 
     bool handleEvents(const sf::Event& event) override;
 

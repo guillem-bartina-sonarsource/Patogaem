@@ -4,7 +4,7 @@
 #include "math.h"
 
 UIBorder::UIBorder(UIBorderStyle style, UIComponent* content)
-: UIComponent(EUIAlign::EUIAlign_NONE, EUIFit::EUIFit_NONE, sf::Vector2f(), sf::Vector2f(), new sf::RectangleShape()),
+: UIComponent(EUIAlign::EUIAlign_NONE, EUIFit::EUIFit_NONE, sf::Vector2f(), sf::Vector2f(-1.f, -1.f), new sf::RectangleShape()),
 content(content),
 offset(style.thickness + style.padding),
 inner(nullptr)
@@ -20,17 +20,15 @@ UIBorder::~UIBorder()
     delete inner;
 }
 
-void UIBorder::setParent(UIBox* parent)
+void UIBorder::setSize(const sf::Vector2f& size)
 {
+    static_cast<sf::RectangleShape*>(getDrawable())->setSize(size);
     if(inner)
     {
         delete inner;
     }
-    sf::Vector2f size = parent->getSize();
+    inner = new UIBox(sf::Vector2f(offset, offset), getSize() - (sf::Vector2f(offset, offset) * 2.f), content);
     UIComponent::setSize(size);
-    static_cast<sf::RectangleShape*>(getDrawable())->setSize(size);
-    inner = new UIBox(sf::Vector2f(offset, offset), size - (sf::Vector2f(offset, offset) * 2.f), content);
-    UIComponent::setParent(parent);
 }
 
 bool UIBorder::handleEvents(const sf::Event& event)
