@@ -30,9 +30,11 @@ class UIBorder : public UIComponent
 
     bool handleEvents(const sf::Event& event) override;
 
-    private:
+    protected:
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+    private:
 
     UIComponent* content;
 

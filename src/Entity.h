@@ -31,14 +31,14 @@ class Entity : public sf::Transformable, public sf::Drawable
 
     protected:
 
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
     sf::Drawable* getDrawable() const;
     void setDrawable(sf::Drawable* drawable);
 
     Level* level;
     
     private:
-
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
     const unsigned int id;
 

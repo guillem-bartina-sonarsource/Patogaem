@@ -4,10 +4,15 @@
 #include <iostream>
 
 UIBox::UIBox(const sf::Vector2f& position, const sf::Vector2f& size, UIComponent* content)
-: UIComponent(EUIAlign::EUIAlign_NONE, EUIFit::EUIFit_NONE, position, size),
+: UIComponent(EUIAlign::EUIAlign_NONE, EUIFit::EUIFit_NONE, position, size, new sf::RectangleShape()),
 content(content),
 isMouseInside(false)
 {
+    renderTexture.create(size.x, size.y);
+    sf::RectangleShape* rect = static_cast<sf::RectangleShape*>(getDrawable());
+    rect->setSize(size);
+    rect->setTextureRect(sf::IntRect(0, size.y, size.x, -size.y));
+    rect->setTexture(&renderTexture.getTexture());
     content->setParent(this);
 }
 
@@ -22,6 +27,11 @@ UIBox::~UIBox()
 void UIBox::setSize(const sf::Vector2f& size)
 {
     Entity::setSize(size);
+    renderTexture.create(size.x, size.y);
+    sf::RectangleShape* rect = static_cast<sf::RectangleShape*>(getDrawable());
+    rect->setSize(size);
+    rect->setTextureRect(sf::IntRect(0, size.y, size.x, -size.y));
+    rect->setTexture(&renderTexture.getTexture());
     content->setParent(this); //trigger fit to parent
 }
 
@@ -100,28 +110,8 @@ bool UIBox::handleEvents(const sf::Event& event)
 
 void UIBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    // Draw to texture
-    sf::RenderTexture renderTexture;
-    renderTexture.create(getSize().x, getSize().y);
-
     renderTexture.clear();
     renderTexture.draw(*content, sf::RenderStates::Default);
 
-    // Draw textured rect
-    sf::RectangleShape rect(getSize());
-    rect.setTexture(&renderTexture.getTexture());
-    rect.setTextureRect(sf::IntRect(0, renderTexture.getTexture().getSize().y, renderTexture.getTexture().getSize().x, -renderTexture.getTexture().getSize().y));
-
-    states.transform *= getTransform();
-    target.draw(rect, states);
-
-    /* Old
-    states.transform *= getTransform();
-    target.draw(*content, states);
-    */
-}
-
-bool UIBox::isInside(const sf::Vector2f& point)
-{
-    return (point.x >= getPosition().x) and (point.x <= getPosition().x + getSize().x * getScale().x) and (point.y >= getPosition().y) and (point.y <= getPosition().y + getSize().y * getScale().y);
+    Entity::draw(target, states);
 }

@@ -46,6 +46,10 @@ class UIComponent : public Entity
 
     virtual bool handleEvents(const sf::Event& event);
 
+    protected:
+
+    bool isInside(const sf::Vector2f& point);
+
     private:
 
     UIBox* parent;
@@ -67,9 +71,11 @@ class UIComponentSet : public UIComponent
 
     bool handleEvents(const sf::Event& event) override;
 
-    private:
+    protected:
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+    private:
 
     std::vector<UIComponent*> components;
 

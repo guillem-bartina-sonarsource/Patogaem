@@ -30,7 +30,6 @@ class UIRect : public UIComponent
     UIRect(UIRectStyle style, EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size);
     ~UIRect();
 
-
     void setSize(const sf::Vector2f& size) override;
 
 };

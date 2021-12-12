@@ -39,8 +39,6 @@ class UIButton : public UIComponent
 
     private:
 
-    bool isInside(const sf::Vector2f& point);
-
     UIButtonStyle style;
     UICallback callback;
 

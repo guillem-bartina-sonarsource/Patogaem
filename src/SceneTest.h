@@ -26,6 +26,8 @@ class SceneTest : public IScene
 
     private:
 
+    std::string textVar;
+
     Level level;
 
     UIBox* box;

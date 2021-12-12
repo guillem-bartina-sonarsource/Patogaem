@@ -38,7 +38,9 @@ bool UIBorder::handleEvents(const sf::Event& event)
 
 void UIBorder::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    states.transform *= getTransform();
-    target.draw(*inner, states);
-    target.draw(*getDrawable(), states);
+    sf::RenderStates renderStatesCopy(states);
+    renderStatesCopy.transform *= getTransform();
+    target.draw(*inner, renderStatesCopy);
+    
+    UIComponent::draw(target, states);
 }

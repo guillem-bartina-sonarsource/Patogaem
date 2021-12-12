@@ -235,5 +235,3 @@ void UICanvas::tryMove(EUICanvasDirection direction)
     }
     canvas->setPosition(-offset);
 }
-
-

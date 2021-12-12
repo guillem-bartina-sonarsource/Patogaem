@@ -52,11 +52,11 @@ class UICanvas : public UIComponent
 
     protected:
 
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
     UIComponent* content;
 
     private:
-
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
     enum EUICanvasDirection
     {

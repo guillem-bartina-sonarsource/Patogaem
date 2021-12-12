@@ -17,14 +17,15 @@ class UIBox : public UIComponent
 
     bool handleEvents(const sf::Event& event) override;
 
-    private:
+    protected:
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    bool isInside(const sf::Vector2f& point);
+    private:
 
     UIComponent* content;
 
+    mutable sf::RenderTexture renderTexture;
     bool isMouseInside;
     
 };

@@ -3,29 +3,8 @@
 
 #include <functional>
 #include <vector>
-#include <ranges>
 
 #include "UICanvas.h"
-
-/*
-struct UIItemListStyle
-{
-    sf::Color fillColor;
-    float outlineThickness;
-    sf::Color outlineColor;
-    sf::Texture* texture = nullptr;
-    std::optional<sf::IntRect> textureRect = std::nullopt;
-
-    static UIItemListStyle defaultStyle()
-    {
-        return {
-            .fillColor = sf::Color::Cyan,
-            .outlineThickness = 0.f,
-            .outlineColor = sf::Color::Black
-        };
-    }
-};
-*/
 
 enum EUIItemListOrientation
 {

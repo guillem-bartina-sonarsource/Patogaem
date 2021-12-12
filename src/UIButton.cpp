@@ -97,8 +97,3 @@ bool UIButton::handleEvents(const sf::Event& event)
     }
     return result;
 }
-
-bool UIButton::isInside(const sf::Vector2f& point)
-{
-    return (point.x >= getPosition().x) and (point.x <= getPosition().x + getSize().x * getScale().x) and (point.y >= getPosition().y) and (point.y <= getPosition().y + getSize().y * getScale().y);
-}

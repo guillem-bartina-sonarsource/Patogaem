@@ -82,6 +82,11 @@ bool UIComponent::handleEvents(const sf::Event& event)
     return false;
 }
 
+bool UIComponent::isInside(const sf::Vector2f& point)
+{
+    return (point.x >= getPosition().x) and (point.x <= getPosition().x + getSize().x * getScale().x) and (point.y >= getPosition().y) and (point.y <= getPosition().y + getSize().y * getScale().y);
+}
+
 
 UIComponentSet::UIComponentSet(const std::vector<UIComponent*>& components)
 : UIComponent(EUIAlign::EUIAlign_NONE, EUIFit::EUIFit_NONE, sf::Vector2f(), sf::Vector2f()),

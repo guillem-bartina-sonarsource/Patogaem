@@ -73,3 +73,7 @@ Create Style Inerface with getDefault?
 //-----
 
 EN TOTS ELS HANDLE EVENTS QUE REPOSICIONEM A COORDENADES LOCALS HEM DE INVERTIR TAMBÉ EL SCALE?
+
+//---
+
+Create DrawableSet and use it in all UIComponents that add drawables
