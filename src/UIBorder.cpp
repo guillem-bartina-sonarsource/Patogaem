@@ -36,6 +36,12 @@ bool UIBorder::handleEvents(const sf::Event& event)
     return inner->handleEvents(event);
 }
 
+void UIBorder::update(const sf::Time deltatime)
+{
+    inner->update(deltatime);
+    UIComponent::update(deltatime);
+}
+
 void UIBorder::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     sf::RenderStates renderStatesCopy(states);

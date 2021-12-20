@@ -13,8 +13,8 @@ struct UIBorderStyle
     static UIBorderStyle defaultStyle()
     {
         return {
-            .color = sf::Color::White,
-            .thickness = 1.f
+            sf::Color::White,
+            1.f
         };
     }
 };
@@ -30,6 +30,8 @@ class UIBorder : public UIComponent
 
     bool handleEvents(const sf::Event& event) override;
 
+    void update(const sf::Time deltatime) override;
+
     protected:
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -38,7 +40,7 @@ class UIBorder : public UIComponent
 
     UIComponent* content;
 
-    float offset;
+    const float offset;
 
     UIBox* inner;
 

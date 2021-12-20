@@ -1,7 +1,7 @@
 
 #include "UIBox.h"
 
-#include <iostream>
+#include "GL/gl.h"
 
 UIBox::UIBox(const sf::Vector2f& position, const sf::Vector2f& size, UIComponent* content)
 : UIComponent(EUIAlign::EUIAlign_NONE, EUIFit::EUIFit_NONE, position, size, new sf::RectangleShape()),
@@ -108,8 +108,28 @@ bool UIBox::handleEvents(const sf::Event& event)
     return result;
 }
 
+void UIBox::update(const sf::Time deltatime)
+{
+    content->update(deltatime);
+    UIComponent::update(deltatime);
+}
+
 void UIBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+    /*
+    sf::RenderStates renderStatesCopy(states);
+    renderStatesCopy.transform *= getTransform();
+
+    sf::FloatRect absoluteRect = renderStatesCopy.transform.transformRect(sf::FloatRect(getPosition(), getSize()));
+
+    glPushAttrib(GL_SCISSOR_BIT);
+    glEnable(GL_SCISSOR_TEST);
+    glScissor(absoluteRect.left, target.getSize().y - (absoluteRect.top + absoluteRect.height), absoluteRect.width, absoluteRect.height);
+    target.draw(*content, renderStatesCopy);
+    glDisable(GL_SCISSOR_TEST);
+    glPopAttrib();
+    */
+
     renderTexture.clear();
     renderTexture.draw(*content, sf::RenderStates::Default);
 

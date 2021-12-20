@@ -77,3 +77,7 @@ EN TOTS ELS HANDLE EVENTS QUE REPOSICIONEM A COORDENADES LOCALS HEM DE INVERTIR 
 //---
 
 Create DrawableSet and use it in all UIComponents that add drawables
+
+//---
+
+USE ROBIN-MAP/ROBIN-SET FOR entitties in scene (https://github.com/Tessil/robin-map)

@@ -29,10 +29,10 @@ struct UICanvasStyle
     static UICanvasStyle defaultStyle()
     {
         return {
-            .verticalSliderPosition = EUICanvasVerticalSliderPosition::RIGHT,
-            .horizontalSliderPosition = EUICanvasHorizontalSliderPosition::BOTTOM,
-            .sliderThickness = 10.f,
-            .scrollSensitivity = 10
+            EUICanvasVerticalSliderPosition::RIGHT,
+            EUICanvasHorizontalSliderPosition::BOTTOM,
+            10.f,
+            10
         };
     }
 };
@@ -42,13 +42,15 @@ class UICanvas : public UIComponent
 {
     public:
 
-    //Make UICanvar parametrizabe in terms of position and size (UIComponent setParent stuff)
+    //Make UICanvar parametrizabe in terms of position and size (UIComponent setParent stuff)?
     UICanvas(const sf::Vector2f& canvasSize, UICanvasStyle style, UIComponent* content);
     ~UICanvas();
 
     void setSize(const sf::Vector2f& size) override;
 
     bool handleEvents(const sf::Event& event) override;
+
+    void update(const sf::Time deltatime) override;
 
     protected:
 
@@ -68,8 +70,8 @@ class UICanvas : public UIComponent
 
     void tryMove(EUICanvasDirection direction);
 
-    sf::Vector2f canvasSize;
-    UICanvasStyle style;
+    const sf::Vector2f canvasSize;
+    const UICanvasStyle style;
     
     UIBox* inner;
     bool verticalSlider, horizontalSlider;

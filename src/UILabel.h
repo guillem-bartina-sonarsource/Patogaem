@@ -15,12 +15,12 @@ struct UILabelStyle
     static UILabelStyle defaultStyle(const sf::Font& font)
     {
         return {
-            .font = font,
-            .characterSize = 30,
-            .style = sf::Text::Regular,
-            .fillColor = sf::Color::Cyan,
-            .outlineThickness = 0.f,
-            .outlineColor = sf::Color::Black
+            font,
+            30,
+            sf::Text::Regular,
+            sf::Color::Cyan,
+            0.f,
+            sf::Color::Black
         };
     }
 };

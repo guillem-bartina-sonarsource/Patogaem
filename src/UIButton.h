@@ -14,11 +14,11 @@ struct UIButtonStyle
     static UIButtonStyle defaultStyle()
     {
         return {
-            .fillColor = sf::Color(100, 0, 0),
-            .hoveringFillColor = sf::Color(160, 0, 0),
-            .clickedFillColor = sf::Color(220, 0, 0),
-            .outlineThickness = 1.f,
-            .outlineColor = sf::Color(255, 0, 0)
+            sf::Color(100, 0, 0),
+            sf::Color(160, 0, 0),
+            sf::Color(220, 0, 0),
+            1.f,
+            sf::Color(255, 0, 0)
         };
     }
 };
@@ -39,8 +39,8 @@ class UIButton : public UIComponent
 
     private:
 
-    UIButtonStyle style;
-    UICallback callback;
+    const UIButtonStyle style;
+    const UICallback callback;
 
     bool mouseInside;
     bool buttonPressed;

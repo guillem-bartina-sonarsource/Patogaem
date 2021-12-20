@@ -1,19 +1,39 @@
 #ifndef UITEXTBOX_HPP
 #define UITEXTBOX_HPP
 
-#include "UILabel.h"
+#include "SFML/System/Time.hpp"
 
-struct UITextBoxStyle : UILabelStyle
+#include "UIRect.h"
+
+struct UITextBoxStyle : public UIRectStyle
 {
+    const sf::Font& font;
+    unsigned int characterSize;
+    unsigned int style;
+    sf::Color fillColor;
+    float outlineThickness;
+    sf::Color outlineColor;
+
     static UITextBoxStyle defaultStyle(const sf::Font& font)
     {
+
         return {
-            UILabelStyle::defaultStyle(font)
+            {
+                sf::Color(60, 60, 60),
+                -1.f,
+                sf::Color(180, 180, 180)
+            },
+            font,
+            30,
+            sf::Text::Regular,
+            sf::Color::Cyan,
+            0.f,
+            sf::Color::Black
         };
     }
 };
 
-class UITextBox : public UILabel
+class UITextBox : public UIRect
 {
     public:
 
@@ -24,14 +44,28 @@ class UITextBox : public UILabel
 
     bool handleEvents(const sf::Event& event) override;
 
+    void update(const sf::Time deltatime) override;
+
+    protected:
+
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
     private:
+
+    void showCursorNow();
 
     std::string* bound;
 
+    const float charLength;
+    
     bool mouseInside;
     bool wrtiting;
 
-    unsigned int startChar;
+    sf::Text text;
+    unsigned int startChar, endChar;
+    bool showCursor;
+    sf::Time cursorTimer;
+    unsigned int cursorPosition;
 };
 
 #endif

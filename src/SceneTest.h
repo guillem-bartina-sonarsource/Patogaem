@@ -32,6 +32,8 @@ class SceneTest : public IScene
 
     UIBox* box;
 
+    sf::Texture texture;
+
 };
 
 #endif

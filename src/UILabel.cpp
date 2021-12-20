@@ -9,9 +9,9 @@ UILabel::UILabel(const std::string& text, UILabelStyle style, EUIAlign align, EU
 : UIComponent(align, fit, position, size, new sf::Text())
 {
     sf::Text* label =  static_cast<sf::Text*>(getDrawable());
-    label->setString(text);
     label->setFont(style.font);
     label->setCharacterSize(style.characterSize);
+    label->setString(text);
     label->setStyle(style.style);
     label->setFillColor(style.fillColor);
     label->setOutlineThickness(style.outlineThickness);

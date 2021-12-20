@@ -122,6 +122,12 @@ bool UICanvas::handleEvents(const sf::Event& event)
     return result;
 }
 
+void UICanvas::update(const sf::Time deltatime)
+{
+    inner->update(deltatime);
+    UIComponent::update(deltatime);
+}
+
 void UICanvas::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     states.transform *= getTransform();

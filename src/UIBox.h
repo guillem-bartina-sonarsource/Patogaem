@@ -17,6 +17,8 @@ class UIBox : public UIComponent
 
     bool handleEvents(const sf::Event& event) override;
 
+    void update(const sf::Time deltatime) override;
+
     protected:
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

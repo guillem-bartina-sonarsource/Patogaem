@@ -4,6 +4,7 @@
 #include <functional>
 #include <vector>
 
+#include "UIComponentSet.h"
 #include "UICanvas.h"
 
 enum EUIItemListOrientation
@@ -25,8 +26,8 @@ class UIItemList : public UICanvas
 
     private:
 
-    EUIItemListOrientation orientation;
-    float itemLength;
+    const EUIItemListOrientation orientation;
+    const float itemLength;
     std::vector<UIComponent*> builtItems;
 };
 

@@ -16,9 +16,9 @@ struct UIRectStyle
     static UIRectStyle defaultStyle()
     {
         return {
-            .fillColor = sf::Color::Cyan,
-            .outlineThickness = 0.f,
-            .outlineColor = sf::Color::Black
+            sf::Color::Magenta,
+            0.f,
+            sf::Color::Black
         };
     }
 };
