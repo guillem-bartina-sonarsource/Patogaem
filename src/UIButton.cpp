@@ -5,26 +5,15 @@
 
 #include "SFML/Graphics/RectangleShape.hpp"
 
-UIButton::UIButton(UIButtonStyle style, UICallback callback, EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size)
-: UIComponent(align, fit, position, size, new sf::RectangleShape(size)),
-style(style),
+UIButton::UIButton(UICallback callback, UIButtonStyle style, EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size)
+: UIRect(style, align, fit, position, size),
 callback(callback),
+style(style),
 mouseInside(false),
 buttonPressed(false)
-{
-    sf::RectangleShape* rect =  static_cast<sf::RectangleShape*>(getDrawable());
-    rect->setFillColor(style.fillColor);
-    rect->setOutlineThickness(-abs(style.outlineThickness));
-    rect->setOutlineColor(style.outlineColor);
-}
+{}
 
 UIButton::~UIButton() {}
-
-void UIButton::setSize(const sf::Vector2f& size)
-{
-    static_cast<sf::RectangleShape*>(getDrawable())->setSize(size);
-    UIComponent::setSize(size);
-}
 
 bool UIButton::handleEvents(const sf::Event& event)
 {

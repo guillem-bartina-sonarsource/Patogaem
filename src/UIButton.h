@@ -1,39 +1,36 @@
 #ifndef UIBUTTON_HPP
 #define UIBUTTON_HPP
 
-#include "UIComponent.h"
+#include "UIRect.h"
 
-struct UIButtonStyle
+struct UIButtonStyle : public UIRectStyle
 {
-    sf::Color fillColor;
     sf::Color hoveringFillColor;
     sf::Color clickedFillColor;
-    float outlineThickness;
-    sf::Color outlineColor;
 
     static UIButtonStyle defaultStyle()
     {
         return {
-            sf::Color(100, 0, 0),
-            sf::Color(160, 0, 0),
-            sf::Color(220, 0, 0),
-            1.f,
-            sf::Color(255, 0, 0)
+            {
+                sf::Color(60, 60, 60),
+                -1.f,
+                sf::Color(180, 180, 180)
+            },
+            sf::Color(160, 160, 160),
+            sf::Color(220, 220, 220)
         };
     }
 };
 
 // Allow to wrtie text or draw a texture on the button
 
-class UIButton : public UIComponent
+class UIButton : public UIRect
 {
     public:
 
     // Add Style
-    UIButton(UIButtonStyle style, UICallback callback, EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size);
+    UIButton(UICallback callback, UIButtonStyle style, EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size);
     ~UIButton();
-
-    void setSize(const sf::Vector2f& size) override;
 
     bool handleEvents(const sf::Event& event) override;
 

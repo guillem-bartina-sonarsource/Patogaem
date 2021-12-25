@@ -27,6 +27,7 @@ class SceneTest : public IScene
     private:
 
     std::string textVar;
+    bool boolVar;
 
     Level level;
 

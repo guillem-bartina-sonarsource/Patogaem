@@ -15,6 +15,7 @@
 #include "UIButton.h"
 #include "UIItemList.hpp"
 #include "UITextBox.h"
+#include "UICheckbox.h"
 
 struct TestItem
 {
@@ -46,15 +47,16 @@ void SceneTest::init(Window::View* window)
     //UICanvas* canvas0 = new UICanvas(sf::Vector2f(600, 600), UICanvasStyle{EUICanvasVerticalSliderPosition::RIGHT, EUICanvasHorizontalSliderPosition::BOTTOM, 10.f, 10}, rect);
     //UIButton* button = new UIButton([](){}, EUIAlign::TOPLEFT, EUIFit::EUIFit_NONE, sf::Vector2f(0.f, 0.f), sf::Vector2f(100, 100));
     
-    UIItemList<TestItem>* itemList = new UIItemList<TestItem>(EUIItemListOrientation_VERTICAL, 200.f, [](TestItem item){ return new UIButton(UIButtonStyle::defaultStyle(), [](){}, EUIAlign::CENTERCENTER, EUIFit::EUIFit_NONE, sf::Vector2f(), sf::Vector2f(50, 50));}, std::vector<TestItem>{TestItem{0}, TestItem{1}, TestItem{2}, TestItem{3}});
+    UIItemList<TestItem>* itemList = new UIItemList<TestItem>(EUIItemListOrientation_VERTICAL, 200.f, [](TestItem item){ return new UIButton([](){}, UIButtonStyle::defaultStyle(), EUIAlign::CENTERCENTER, EUIFit::EUIFit_NONE, sf::Vector2f(), sf::Vector2f(50, 50));}, std::vector<TestItem>{TestItem{0}, TestItem{1}, TestItem{2}, TestItem{3}});
     //UIComponentSet* set = new UIComponentSet(std::vector<UIComponent*>{rect, button});
     
     UITextBox* textBox = new UITextBox(&textVar, UITextBoxStyle::defaultStyle(*Resources::getInstance()->Font("fonts/font.ttf")), EUIAlign::TOPLEFT, EUIFit::EUIFit_NONE, sf::Vector2f(), sf::Vector2f(-1.f, 0.f));
     //UIBox* box = new UIBox(sf::Vector2f(100, 100), sf::Vector2f(500, 500), new UIBorder(UIBorderStyle{sf::Color::Cyan, 5.f}, rect));
     //UICanvas* canvas = new UICanvas(sf::Vector2f(800, 800), UICanvasStyle{EUICanvasVerticalSliderPosition::RIGHT, EUICanvasHorizontalSliderPosition::BOTTOM, 10.f, 10}, rect);
     
+    UICheckbox* cb = new UICheckbox(&boolVar, UICheckboxStyle::defaultStyle(), EUIAlign::TOPLEFT, EUIFit::EUIFit_NONE, sf::Vector2f(0.f, 0.f), sf::Vector2f(400, 400));
     
-    UIBox* box = new UIBox(sf::Vector2f(100, 100), sf::Vector2f(400, 400), textBox);
+    UIBox* box = new UIBox(sf::Vector2f(100, 100), sf::Vector2f(400, 400), cb);
     box->levelize(&level);
 
     this->box = box;

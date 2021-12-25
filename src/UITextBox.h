@@ -16,7 +16,6 @@ struct UITextBoxStyle : public UIRectStyle
 
     static UITextBoxStyle defaultStyle(const sf::Font& font)
     {
-
         return {
             {
                 sf::Color(60, 60, 60),
@@ -26,7 +25,7 @@ struct UITextBoxStyle : public UIRectStyle
             font,
             30,
             sf::Text::Regular,
-            sf::Color::Cyan,
+            sf::Color::White,
             0.f,
             sf::Color::Black
         };
