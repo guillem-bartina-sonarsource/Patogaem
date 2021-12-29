@@ -9,12 +9,11 @@ bound(bound),
 charLength(style.font.getGlyph(int('#'), style.characterSize, style.style & sf::Text::Bold, style.outlineThickness).advance),
 wrtiting(false),
 startChar(0),
-endChar(1),
+endChar(bound->length()+1),
 showCursor(false),
 cursorTimer(sf::Time::Zero),
 cursorPosition(0)
 {
-    *bound = "";
     text.setPosition(5.f, 0.f);
     text.setFont(style.font);
     text.setCharacterSize(style.characterSize);
@@ -22,13 +21,23 @@ cursorPosition(0)
     text.setFillColor(style.fillColor);
     text.setOutlineThickness(style.outlineThickness);
     text.setOutlineColor(style.outlineColor);
-    text.setString(" ");
+    text.setString(*bound);
 }
 
 UITextBox::~UITextBox() {}
 
 void UITextBox::setSize(const sf::Vector2f& size)
 {
+    while((endChar-startChar) * charLength > size.x - (5.f * 2))
+    {
+        startChar++;
+    }
+
+    if(startChar > 0)
+    {
+        text.setPosition(sf::Vector2f(size.x - (endChar-startChar)*charLength - 5.f, 0.f));
+    }
+    
     UIRect::setSize(sf::Vector2f(size.x, getSize().y));
 }
 

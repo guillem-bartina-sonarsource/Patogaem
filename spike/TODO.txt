@@ -72,12 +72,23 @@ Create Style Inerface with getDefault?
 
 //-----
 
-EN TOTS ELS HANDLE EVENTS QUE REPOSICIONEM A COORDENADES LOCALS HEM DE INVERTIR TAMBÉ EL SCALE?
-
 //---
 
 Create DrawableSet and use it in all UIComponents that add drawables
 
+Add addDraweable and delDrawable in drawableSet and use them to add/update/delete drawables in UI elements.
+
 //---
 
 USE ROBIN-MAP/ROBIN-SET FOR entitties in scene (https://github.com/Tessil/robin-map)
+
+// ----
+
+What about doing that tile editor thing i think abount doing VJ
+
+Multiple types of layers (tile, backgroud, sparse, irregular, ...)
+Use graph/tree/union fidn for map with tiles with diferent sizes/shapes for marking tiles that depend on others?
+For irregular/sparse use some algorith for detect overlapping?
+
+//JUNK
+...EN TOTS ELS HANDLE EVENTS QUE REPOSICIONEM A COORDENADES LOCALS HEM DE INVERTIR TAMBÉ EL SCALE?

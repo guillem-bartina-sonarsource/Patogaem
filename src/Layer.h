@@ -3,6 +3,8 @@
 
 #include "EntityCollection.h"
 
+//Backgroud (images), tilemap, sparse tile map, ...
+
 class Layer
 {
     public:
@@ -12,7 +14,7 @@ class Layer
 
     private:
 
-    EntityCollection* entities;
+    //EntityCollection* entities;
 
 };
 

@@ -88,7 +88,7 @@ bool UICanvas::handleEvents(const sf::Event& event)
                 }
             }
                 break;
-            case sf::Event::MouseWheelScrolled:
+            case sf::Event::MouseWheelScrolled: //Check mouse inside?
             {
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt) or sf::Keyboard::isKeyPressed(sf::Keyboard::RAlt))
                 {

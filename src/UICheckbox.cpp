@@ -10,7 +10,7 @@ UICheckbox::UICheckbox(bool* bound, UICheckboxStyle style, EUIAlign align, EUIFi
 bound(bound),
 style(style),
 mouseInside(false),
-checked(false)
+checked(*bound)
 {}
 
 UICheckbox::~UICheckbox() {}
