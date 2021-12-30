@@ -6,6 +6,8 @@
 
 #include "SceneTest.h"
 
+#include "imgui/imgui.h"
+
 const std::string SceneMenu::texts[NUM_OPTIONS] = {"PLAY", "EDITOR", "EXIT"};
 
 SceneMenu::SceneMenu(int x)
@@ -120,4 +122,8 @@ void SceneMenu::draw(Renderer renderer) const
     renderer(title);
     
     for(int i = 0; i < NUM_OPTIONS; i++) renderer(options[i]);
+
+    ImGui::Begin("HELLO");
+    ImGui::Button("Pretty button");
+    ImGui::End();
 }

@@ -166,6 +166,11 @@ Window::View::View(Window* window)
 
 Window::View::~View() {}
 
+uintptr_t Window::View::getWindowId() const
+{
+    return static_cast<uintptr_t>(window->window.getSystemHandle());
+}
+
 sf::Vector2u Window::View::getSize() const
 {
     return window->size;

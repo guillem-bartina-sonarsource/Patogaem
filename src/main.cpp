@@ -1,5 +1,6 @@
 #include "Engine/Game.h"
 #include "Engine/Resources.h"
+#include "Engine/ImguiSceneDecorator.h"
 #include "SceneMenu.h"
 
 int main()
@@ -9,7 +10,7 @@ int main()
   Game game;
 
   game.launch(
-    Window::Builder(new SceneMenu(0))
+    Window::Builder(new ImguiSceneDecorator(new SceneMenu(0)))
     .setFullscreen(1000, 800)
     .enableMultiscene()
     .setTitle("TITLE")

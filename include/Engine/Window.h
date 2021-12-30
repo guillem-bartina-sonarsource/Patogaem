@@ -87,6 +87,8 @@ class Window::View
     View(Window* window);
     ~View();
 
+    uintptr_t getWindowId() const;
+
     sf::Vector2u getSize() const;
     bool isFullscreen() const;
     sf::Vector2u getScreenSize() const;
