@@ -17,15 +17,18 @@
 #include "UITextBox.h"
 #include "UICheckbox.h"
 #include "UISlider.h"
-
-struct TestItem
-{
-    int bullshit;
-};
+#include "UIClickableItemList.hpp"
+#include "UISelectableItemList.hpp"
 
 SceneTest::SceneTest() : IScene() {}
 
-SceneTest::~SceneTest() {}
+SceneTest::~SceneTest()
+{
+    for(auto i : selected)
+    {
+        std::cout << i << std::endl;
+    }
+}
 
 void SceneTest::init(Window::View* window)
 {
@@ -48,7 +51,10 @@ void SceneTest::init(Window::View* window)
     //UICanvas* canvas0 = new UICanvas(sf::Vector2f(600, 600), UICanvasStyle{EUICanvasVerticalSliderPosition::RIGHT, EUICanvasHorizontalSliderPosition::BOTTOM, 10.f, 10}, rect);
     //UIButton* button = new UIButton([](){}, EUIAlign::TOPLEFT, EUIFit::EUIFit_NONE, sf::Vector2f(0.f, 0.f), sf::Vector2f(100, 100));
     
-    //UIItemList<TestItem>* itemList = new UIItemList<TestItem>(EUIItemListOrientation_VERTICAL, 200.f, [](TestItem item){ return new UIButton([](){}, UIButtonStyle::defaultStyle(), EUIAlign::CENTERCENTER, EUIFit::EUIFit_NONE, sf::Vector2f(), sf::Vector2f(50, 50));}, std::vector<TestItem>{TestItem{0}, TestItem{1}, TestItem{2}, TestItem{3}});
+    //UIItemList<TestItem>* itemList = new  UIClickableItemList<TestItem>([](TestItem ti){ std::cout << ti.bullshit << " "; }, EUIItemListOrientation_VERTICAL, 200.f, [](TestItem item){ return new UIButton([](){}, UIButtonStyle::defaultStyle(), EUIAlign::CENTERCENTER, EUIFit::EUIFit_NONE, sf::Vector2f(), sf::Vector2f(50, 50));}, std::vector<TestItem>{TestItem{0}, TestItem{1}, TestItem{2}, TestItem{3}});
+    
+    UISelectableItemList<TestItem>* itemList = new  UISelectableItemList<TestItem>(&selected, true, EUIItemListOrientation_VERTICAL, 200.f, [](TestItem item){ return new UIButton([](){}, UIButtonStyle::defaultStyle(), EUIAlign::CENTERCENTER, EUIFit::EUIFit_NONE, sf::Vector2f(), sf::Vector2f(50, 50));}, std::vector<TestItem>{TestItem{0}, TestItem{1}, TestItem{2}, TestItem{3}});
+
     //UIComponentSet* set = new UIComponentSet(std::vector<UIComponent*>{rect, button});
     
     //UITextBox* textBox = new UITextBox(&textVar, UITextBoxStyle::defaultStyle(*Resources::getInstance()->Font("fonts/font.ttf")), EUIAlign::TOPLEFT, EUIFit::EUIFit_NONE, sf::Vector2f(), sf::Vector2f(-1.f, 0.f));
@@ -59,10 +65,15 @@ void SceneTest::init(Window::View* window)
     
     intVar = 50;
 
-    UISlider* sl = new UISlider(&intVar, EUISliderOrientation::EUISliderOrientation_HORIZONTAL, UISliderStyle::defaultStyle(), EUIAlign::TOPLEFT, EUIFit::EUIFit_NONE, sf::Vector2f(0.f, 0.f), sf::Vector2f(300, 100));
+    //UISlider* sl = new UISlider(&intVar, EUISliderOrientation::EUISliderOrientation_HORIZONTAL, UISliderStyle::defaultStyle(), EUIAlign::TOPLEFT, EUIFit::EUIFit_NONE, sf::Vector2f(0.f, 0.f), sf::Vector2f(300, 100));
 
+    //UIButtonStyle bstyle = UIButtonStyle::defaultStyle();
+    //bstyle.texture = Resources::getInstance()->Texture("textures/crate.png");
+    //bstyle.textureRect = std::optional<sf::IntRect>(sf::IntRect(sf::Vector2i(), sf::Vector2i(200, 100)));
 
-    UIBox* box = new UIBox(sf::Vector2f(100, 100), sf::Vector2f(400, 400), sl);
+    //UIButton* button = new UIButton([]{}, bstyle, EUIAlign_NONE, EUIFit_NONE, sf::Vector2f(), sf::Vector2f(200, 100));
+
+    UIBox* box = new UIBox(sf::Vector2f(100, 100), sf::Vector2f(400, 400), itemList);
     box->levelize(&level);
 
     this->box = box;

@@ -1,10 +1,13 @@
 
 #include "UIComponentSet.h"
 
+#include <ranges>
 
-UIComponentSet::UIComponentSet(const std::vector<UIComponent*>& components)
+
+UIComponentSet::UIComponentSet(const std::vector<UIComponent*>& components, bool ordered)
 : UIComponent(EUIAlign::EUIAlign_NONE, EUIFit::EUIFit_NONE, sf::Vector2f(), sf::Vector2f()),
-components(components)
+components(components),
+ordered(ordered)
 {}
 
 UIComponentSet::~UIComponentSet()
@@ -29,8 +32,11 @@ bool UIComponentSet::handleEvents(const sf::Event& event)
 
     for(UIComponent*& component : components)
     {
-        bool x = component->handleEvents(event);
-        result = result or x;
+        if(not ordered or not result)
+        {
+            bool x = component->handleEvents(event);
+            result = result or x;
+        }
     }
 
     return result;
@@ -39,7 +45,7 @@ bool UIComponentSet::handleEvents(const sf::Event& event)
 void UIComponentSet::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
-    for(UIComponent* const& component : components)
+    for(UIComponent* const& component : components | std::views::reverse)
     {
         target.draw(*component, states);
     }

@@ -8,7 +8,7 @@ class UIComponentSet : public UIComponent
 {
     public:
 
-    UIComponentSet(const std::vector<UIComponent*>& components);
+    UIComponentSet(const std::vector<UIComponent*>& components, bool ordered = false);
     ~UIComponentSet();
 
     void setParent(UIBox* parent) override;
@@ -22,6 +22,7 @@ class UIComponentSet : public UIComponent
     private:
 
     std::vector<UIComponent*> components;
+    bool ordered;
 
 };
 

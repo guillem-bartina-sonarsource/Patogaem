@@ -30,6 +30,7 @@ bool UIButton::handleEvents(const sf::Event& event)
                     rect->setFillColor(sf::Color(style.hoveringFillColor));
                 }
                 mouseInside = true;
+                result = true;
             }
             else
             {
@@ -39,7 +40,6 @@ bool UIButton::handleEvents(const sf::Event& event)
                 }
                 mouseInside = false;
             }
-            result = true;
         }
             break;
         case sf::Event::MouseButtonPressed:
@@ -48,8 +48,8 @@ bool UIButton::handleEvents(const sf::Event& event)
             {
                 rect->setFillColor(style.clickedFillColor);
                 buttonPressed = true;
+                result = true;
             }
-            result = true;
         }
             break;
         case sf::Event::MouseButtonReleased:
@@ -66,8 +66,8 @@ bool UIButton::handleEvents(const sf::Event& event)
                 {
                     rect->setFillColor(style.fillColor);
                 }
+                result = true;
             }
-            result = true;
         }
             break;
         case sf::Event::MouseLeft:
@@ -78,7 +78,6 @@ bool UIButton::handleEvents(const sf::Event& event)
                 mouseInside = false;
                 buttonPressed = false;
             }
-            result = false;
         }
             break;
         default:

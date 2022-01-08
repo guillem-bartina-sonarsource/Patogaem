@@ -27,3 +27,8 @@ void UIRect::setSize(const sf::Vector2f& size)
     static_cast<sf::RectangleShape*>(getDrawable())->setSize(size);
     UIComponent::setSize(size);
 }
+
+void UIRect::setFillColor(const sf::Color& fillColor)
+{
+    static_cast<sf::RectangleShape*>(getDrawable())->setFillColor(fillColor);
+}

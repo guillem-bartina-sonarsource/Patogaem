@@ -22,9 +22,9 @@ class UIItemList : public UICanvas
     UIItemList(EUIItemListOrientation orientation, float itemLength, std::function<UIComponent*(ItemClass)> itemBuilder, const std::vector<ItemClass>& items);
     ~UIItemList();
 
-    void setSize(const sf::Vector2f& size) override;
+    virtual void setSize(const sf::Vector2f& size) override;
 
-    private:
+    protected:
 
     const EUIItemListOrientation orientation;
     const float itemLength;

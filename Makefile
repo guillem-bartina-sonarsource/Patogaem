@@ -12,7 +12,7 @@ THIRDPARTY_REMOTE_LIBS := GL sfml-system sfml-graphics sfml-window pthread sfml-
 .SECONDEXPANSION:
 
 CC := g++
-CC_FLAGS := -std=c++17 -O2 -Wall
+CC_FLAGS := -std=c++20 -O2 -Wall
 
 BIN_DIR := bin
 INCLUDE_DIR := include

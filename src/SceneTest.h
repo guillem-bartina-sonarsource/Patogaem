@@ -5,9 +5,16 @@
 #include "Engine/IScene.h"
 #include "Engine/AnimatedSprite.hpp"
 
+#include <set>
+
 #include "Entity.h"
 #include "Level.h"
 #include "UIBox.h"
+
+struct TestItem
+{
+    int bullshit;
+};
 
 class SceneTest : public IScene
 {
@@ -35,6 +42,8 @@ class SceneTest : public IScene
     UIBox* box;
 
     sf::Texture texture;
+
+    std::set<unsigned int> selected;
 
 };
 
