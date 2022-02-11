@@ -19,6 +19,7 @@
 #include "UISlider.h"
 #include "UIClickableItemList.hpp"
 #include "UISelectableItemList.hpp"
+#include "UIDivider.h"
 
 SceneTest::SceneTest() : IScene() {}
 
@@ -73,7 +74,7 @@ void SceneTest::init(Window::View* window)
 
     //UIButton* button = new UIButton([]{}, bstyle, EUIAlign_NONE, EUIFit_NONE, sf::Vector2f(), sf::Vector2f(200, 100));
 
-    UIBox* box = new UIBox(sf::Vector2f(100, 100), sf::Vector2f(400, 400), itemList);
+    UIBox* box = new UIBox(sf::Vector2f(100, 100), sf::Vector2f(400, 400), new UIDivider(EUIDividerOrientation_HORIZONTAL, 150.f, new UIRect(UIRectStyle::defaultStyle(), EUIAlign_NONE, EUIFit_NONE, sf::Vector2f(), sf::Vector2f(-1.f, -1.f)), itemList));
     box->levelize(&level);
 
     this->box = box;
