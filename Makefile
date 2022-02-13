@@ -21,10 +21,14 @@ LIB_DIR := lib
 BUILD_DIR := build
 
 TARGET := $(BIN_DIR)/$(TARGET_FILENAME)
-SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp)
-OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRC_FILES))
 
-LOCAL_LIBS := $(patsubst $(SRC_DIR)/%/,%,$(wildcard $(SRC_DIR)/*/))
+_TMP := $(patsubst $(SRC_DIR)/%/,%,$(wildcard $(SRC_DIR)/*/))
+SRC_SUBDIRS := $(filter _%,$(_TMP))
+LOCAL_LIBS := $(filter-out $(SRC_SUBDIRS),$(_TMP))
+
+SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp) $(foreach subdir,$(SRC_SUBDIRS),$(wildcard $(SRC_DIR)/$(subdir)/*.cpp))
+
+OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRC_FILES))
 LOCAL_LIBS_FILES := $(patsubst %,$(LIB_DIR)/lib%.a,$(LOCAL_LIBS))
 
 THIRDPARTY_LOCAL_LIBS := $(filter-out $(LOCAL_LIBS),$(patsubst $(LIB_DIR)/lib%.a,%,$(wildcard $(LIB_DIR)/lib*.a)))
@@ -34,7 +38,7 @@ THIRDPARTY_LOCAL_LIBS_READY := $(addprefix -l,$(THIRDPARTY_LOCAL_LIBS))
 LOCAL_LIBS_READY := $(addprefix -l,$(patsubst $(SRC_DIR)/%/,%,$(LOCAL_LIBS)))
 
 $(TARGET): $(OBJ_FILES) $(LOCAL_LIBS_FILES)
-	$(CC) $(BUILD_DIR)/*.o -o $@ -L$(LIB_DIR) $(LOCAL_LIBS_READY) $(THIRDPARTY_LOCAL_LIBS_READY) $(THIRDPARTY_REMOTE_LIBS_READY)
+	$(CC) $(OBJ_FILES) -o $@ -L$(LIB_DIR) $(LOCAL_LIBS_READY) $(THIRDPARTY_LOCAL_LIBS_READY) $(THIRDPARTY_REMOTE_LIBS_READY)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp _mkdir_$(BUILD_DIR)-$(subst /,-,$$(dir %))
 	$(CC) $(CC_FLAGS) $(CC_EXTRA_FLAGS) -I$(INCLUDE_DIR) -I$(SRC_DIR)/$(dir $*) -c -o $@ $<

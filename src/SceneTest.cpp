@@ -5,21 +5,9 @@
 
 #include "Engine/Resources.h"
 
-#include "UIComponentSet.h"
 #include "TestEntity.h"
-#include "UIBox.h"
-#include "UIBorder.h"
-#include "UIRect.h"
-#include "UILabel.h"
-#include "UICanvas.h"
-#include "UIButton.h"
-#include "UIItemList.hpp"
-#include "UITextBox.h"
-#include "UICheckbox.h"
-#include "UISlider.h"
-#include "UIClickableItemList.hpp"
-#include "UISelectableItemList.hpp"
-#include "UIDivider.h"
+
+#include "_UI/UI.h"
 
 SceneTest::SceneTest() : IScene() {}
 
@@ -78,6 +66,8 @@ void SceneTest::init(Window::View* window)
     box->levelize(&level);
 
     this->box = box;
+
+    _EntityRegistry::printTree();
 }
 
 void SceneTest::handleEvents(const sf::Event& event)

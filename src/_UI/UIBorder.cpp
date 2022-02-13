@@ -1,7 +1,7 @@
 
 #include "UIBorder.h"
 
-#include "math.h"
+#include <math.h>
 
 UIBorder::UIBorder(UIBorderStyle style, UIComponent* content)
 : UIComponent(EUIAlign::EUIAlign_NONE, EUIFit::EUIFit_NONE, sf::Vector2f(), sf::Vector2f(-1.f, -1.f), new sf::RectangleShape()),

@@ -1,7 +1,7 @@
 
 #include "UIBox.h"
 
-#include "GL/gl.h"
+#include <GL/gl.h>
 
 UIBox::UIBox(const sf::Vector2f& position, const sf::Vector2f& size, UIComponent* content)
 : UIComponent(EUIAlign::EUIAlign_NONE, EUIFit::EUIFit_NONE, position, size, new sf::RectangleShape()),

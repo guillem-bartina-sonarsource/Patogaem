@@ -1,10 +1,9 @@
 
 #include "Entity.h"
 
-#include "EntityRegistry.h"
 #include "Level.h"
 
-EntityRegistryNode* Entity::node = EntityRegistry::registerClass("Entity", false, nullptr);
+const _EntityRegistryNode* Entity::_fixnode = _EntityRegistry::registerClass("Entity", nullptr);
 
 unsigned int Entity::nextId = 0;
 

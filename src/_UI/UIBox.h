@@ -1,7 +1,7 @@
 #ifndef UIBOX_HPP
 #define UIBOX_HPP
 
-#include "Entity.h"
+#include "../Entity.h"
 #include "UIComponent.h"
 
 class UIBox : public UIComponent

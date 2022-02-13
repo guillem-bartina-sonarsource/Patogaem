@@ -6,7 +6,8 @@
 #include "SFML/Audio/Sound.hpp"
 #include "SFML/Audio/SoundBuffer.hpp"
 
-class EntityRegistryNode;
+#include "_EntityRegistry.h"
+
 class Level;
 
 class Entity : public sf::Transformable, public sf::Drawable
@@ -29,6 +30,8 @@ class Entity : public sf::Transformable, public sf::Drawable
 
     sf::RectangleShape debug() const;
 
+    static const _EntityRegistryNode* _fixnode;
+
     protected:
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -37,6 +40,8 @@ class Entity : public sf::Transformable, public sf::Drawable
     void setDrawable(sf::Drawable* drawable);
 
     Level* level;
+
+    //const _EntityRegistryNode* _node;
     
     private:
 
@@ -46,9 +51,7 @@ class Entity : public sf::Transformable, public sf::Drawable
 
     sf::Drawable* drawable;
 
-    static EntityRegistryNode* node;
     static unsigned int nextId;
-
 };
 
 #endif

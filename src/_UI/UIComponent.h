@@ -3,7 +3,7 @@
 
 #include <functional>
 
-#include "Entity.h"
+#include "../Entity.h"
 
 enum EUIAlign
 {

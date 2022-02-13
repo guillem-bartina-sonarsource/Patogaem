@@ -3,6 +3,8 @@
 
 #include "Engine/Resources.h"
 
+const _EntityRegistryNode* TestEntity::_fixnode = _EntityRegistry::registerClass("TestEntity", Entity::_fixnode);
+
 TestEntity::TestEntity(const sf::Vector2f& position)
 : Entity(position, sf::Vector2f(64, 128))
 {

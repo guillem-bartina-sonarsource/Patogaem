@@ -16,6 +16,8 @@ class TestEntity : public Entity
     ~TestEntity();
 
     virtual void update(const sf::Time deltatime) override;
+
+    static const _EntityRegistryNode* _fixnode;
     
     private:
 
@@ -28,7 +30,6 @@ class TestEntity : public Entity
 
     AnimatedSprite<Anim, Anim::NONE>* sprite;
     sf::Vector2f vel;
-
 };
 
 #endif
