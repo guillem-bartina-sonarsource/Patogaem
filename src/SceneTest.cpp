@@ -6,6 +6,7 @@
 #include "Engine/Resources.h"
 
 #include "TestEntity.h"
+#include "PhysicEntity.h"
 
 #include "_UI/UI.h"
 
@@ -22,9 +23,10 @@ SceneTest::~SceneTest()
 void SceneTest::init(Window::View* window)
 {
     Entity* entity = new TestEntity(sf::Vector2f(100, 100));
-    entity->levelize(&level);
+    level.addEntity(entity);
 
 
+    /*
     const sf::Font* font = Resources::getInstance()->Font("fonts/font.ttf");
 
     for(unsigned char c = 0; c < 200; c++)
@@ -33,6 +35,7 @@ void SceneTest::init(Window::View* window)
     }
 
     texture = font->getTexture(24);
+    */
 
     //UIRect* rect = new UIRect(UIRectStyle{sf::Color::Blue, -5.f, sf::Color::Yellow, &texture, std::optional<sf::IntRect>(sf::IntRect(sf::Vector2i(), sf::Vector2i(texture.getSize())))}, EUIAlign::EUIAlign_NONE, EUIFit::EUIFit_NONE, sf::Vector2f(0.f, 0.f), sf::Vector2f(-1.f, -1.f));
     //UIBox* box = new UIBox(sf::Vector2f(100, 100), sf::Vector2f(400, 400), rect);
@@ -63,11 +66,13 @@ void SceneTest::init(Window::View* window)
     //UIButton* button = new UIButton([]{}, bstyle, EUIAlign_NONE, EUIFit_NONE, sf::Vector2f(), sf::Vector2f(200, 100));
 
     UIBox* box = new UIBox(sf::Vector2f(100, 100), sf::Vector2f(400, 400), new UIDivider(EUIDividerOrientation_HORIZONTAL, 150.f, new UIRect(UIRectStyle::defaultStyle(), EUIAlign_NONE, EUIFit_NONE, sf::Vector2f(), sf::Vector2f(-1.f, -1.f)), itemList));
-    box->levelize(&level);
+    level.addEntity(box);
 
     this->box = box;
 
     _EntityRegistry::printTree();
+
+    std::cout << TestEntity::snode->className << " " << Entity::snode->className << " " << PhysicEntity::snode->className << " " << Entity::isA<TestEntity>(*entity) << std::endl;
 }
 
 void SceneTest::handleEvents(const sf::Event& event)

@@ -5,9 +5,10 @@
 
 UIComponent::UIComponent(EUIAlign align, EUIFit fit, const sf::Vector2f& position, const sf::Vector2f& size, sf::Drawable* drawable)
 : Entity(position, size, drawable),
+parent(nullptr),
 align(align),
-fit(fit),
-parent(nullptr) {}
+fit(fit)
+{}
 
 UIComponent::~UIComponent() {}
 

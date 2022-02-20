@@ -1,5 +1,5 @@
-#ifndef PHYSICENTITY_HPP
-#define PHYSICENTITY_HPP
+#ifndef TESTENTITY_HPP
+#define TESTENTITY_HPP
 
 #include "SFML/System/Vector2.hpp"
 
@@ -8,16 +8,18 @@
 #include "Entity.h"
 
 
-class TestEntity : public Entity
+class TestEntity : public Entity, public _EntityRegistration<TestEntity, Entity, "TestEntity">
 {
     public:
+
+    using _EntityRegistration<TestEntity, Entity, "TestEntity">::snode;
 
     TestEntity(const sf::Vector2f& position);
     ~TestEntity();
 
     virtual void update(const sf::Time deltatime) override;
 
-    static const _EntityRegistryNode* _fixnode;
+    //static const _EntityRegistryNode* _fixnode;
     
     private:
 

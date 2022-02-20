@@ -3,21 +3,24 @@
 
 #include "Level.h"
 
-const _EntityRegistryNode* Entity::_fixnode = _EntityRegistry::registerClass("Entity", nullptr);
-
 unsigned int Entity::nextId = 0;
 
 Entity::Entity(const sf::Vector2f& position, const sf::Vector2f& size, sf::Drawable* drawable)
-: id(nextId++)
+: level(nullptr),
+layer(-1),
+id(nextId++),
+size(size),
+drawable(drawable)
 {
     setPosition(position);
-    this->size = size;
-    this->drawable = drawable;
-    level = nullptr;
 }
 
 Entity::~Entity()
 {
+    if(level)
+    {
+        unlevelize();
+    }
     if(drawable)
     {
         delete drawable;
@@ -36,10 +39,26 @@ void Entity::setSize(const sf::Vector2f& size)
 
 void Entity::update(const sf::Time deltatime) {}
 
-void Entity::levelize(Level* level)
+void Entity::levelize(Level* level, int layer)
 {
     this->level = level;
-    level->add(this);
+    this->layer = layer;
+    level->entities.insert(this);
+    if(drawable)
+    {
+        level->layers[layer].bindDrawable(drawable);
+    }
+}
+
+void Entity::unlevelize()
+{
+    if(drawable)
+    {
+        level->layers[layer].unbindDrawable(drawable);
+    }
+    level->entities.erase(this);
+    layer = 0;
+    level = nullptr;
 }
 
 unsigned int Entity::getId() const

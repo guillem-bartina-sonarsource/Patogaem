@@ -1,38 +1,40 @@
 
-#include "_EntityRegistry.h"
+#include "_EntityRegistry.hpp"
 
 #include <iostream>
+#include <typeinfo>
 
-_EntityRegistryNode::_EntityRegistryNode(const std::string& name, const _EntityRegistryNode* supernode)
-: name(name),
+_EntityRegistryNode::_EntityRegistryNode(const std::string& className, _EntityRegistryNode* supernode)
+: className(className),
 supernode(supernode)
 {
     if(supernode)
     {
-        supernode->addSubnode(this);
+        supernode->subnodes.push_back(this);
     }
 }
 
-_EntityRegistryNode::~_EntityRegistryNode() {}
-
-void _EntityRegistryNode::addSubnode(const _EntityRegistryNode* subnode) const
+_EntityRegistryNode::~_EntityRegistryNode()
 {
-    subnodes.push_back(subnode);
+    for(const _EntityRegistryNode*& subnode : subnodes)
+    {
+        delete subnode;
+    }
 }
-
-const std::string& _EntityRegistryNode::getName() const
-{
-    return name;
-}
-
 
 _EntityRegistryNode* _EntityRegistry::root = nullptr;
+std::unordered_map<std::size_t, const _EntityRegistryNode*> _EntityRegistry::mapping;
 
-_EntityRegistryNode* _EntityRegistry::registerClass(const std::string& name, const _EntityRegistryNode* superclass)
+
+_EntityRegistryNode* _EntityRegistry::registerClass(std::size_t classHashCode, const std::string& className, const _EntityRegistryNode* supernode)
 {
-    _EntityRegistryNode* node = new _EntityRegistryNode(name, superclass);
+    _EntityRegistryNode* nonconst_supernode = const_cast<_EntityRegistryNode*>(supernode);
 
-    if(superclass == nullptr)
+    _EntityRegistryNode* node = new _EntityRegistryNode(className, nonconst_supernode);
+
+    mapping.insert(std::make_pair(classHashCode, node));
+
+    if(nonconst_supernode == nullptr)
     {
         root = node;
     }
@@ -45,14 +47,12 @@ const _EntityRegistryNode* _EntityRegistry::getRoot()
     return root;
 }
 
-const std::vector<const _EntityRegistryNode*>& _EntityRegistryNode::getSubnodes() const
-{
-    return subnodes;
-}
-
 void _EntityRegistry::printTree()
 {
-    printTreeRec(root, 0);
+    if(root)
+    {
+        printTreeRec(root, 0);
+    }
 }
 
 void _EntityRegistry::printTreeRec(const _EntityRegistryNode* node, int depth)
@@ -63,12 +63,27 @@ void _EntityRegistry::printTreeRec(const _EntityRegistryNode* node, int depth)
         out += " | ";
     }
 
-    out += "- " + node->getName();
+    out += "- " + node->className;
 
     std::cout << out << std::endl;
 
-    for(const _EntityRegistryNode* const& subnode : node->getSubnodes())
+    for(const _EntityRegistryNode* const& subnode : node->subnodes)
     {
         printTreeRec(subnode, depth+1);
     }
 }
+
+const _EntityRegistryNode* _EntityRegistry::getNode(std::size_t classHashCode)
+{
+    return mapping.at(classHashCode);
+}
+
+bool _EntityRegistry::isA(const _EntityRegistryNode* object, const _EntityRegistryNode* target)
+{
+    _EntityRegistryNode const* iter = object;
+    while(iter != target and (iter = iter->supernode));
+    return iter == target;
+}
+
+
+const _EntityRegistryNode* _RootEntityRegistration::snode = nullptr;

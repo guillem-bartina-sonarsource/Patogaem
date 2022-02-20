@@ -1,94 +1,105 @@
-Engine:
-NO - Add schenemanager parameter to scenes witrh Close and Change scene operation
-- Add WindowInfo parameter to scenes with window info
-OK - Resolutions? Pyshic/Logic resolution, automatic scling?
-
-> Fuillsctreen Logic in Window.h. Capture click events and offset them.
-
-Patogaem:
-- Add IsX to Entity()
-- Drawable -> Ttransfformabe to other class?
 
 
+-----------------------------------------------------------------------------------------------------------------------
+
+DESIGN NOTES AND OPTIONS:
+
+1)
+    Creaate Updatabe y Inputable inbterfaces?
+
+2)
+    REPLACE IPlataform for PyshicEntity property?
+
+3)
+    PatoFile per treballar amb fitcers generats per el joc (nivells, dialegs, menus, ...)? [check duckfile]
+
+4)
+    What about doing that tile editor thing i think abount doing VJ
+
+    Multiple types of layers (tile, backgroud, sparse, irregular, ...)
+    Use graph/tree/union fidn for map with tiles with diferent sizes/shapes for marking tiles that depend on others?
+    For irregular/sparse use some algorith for detect overlapping?
+
+5)
+    put addEntoity in Level overloadwd with every parameter
+    put addToLevel in Entity and implement in every subclass it needs to <----------------------------
+
+6)
+    Crear classe gfroupable per poder agrupar blocs
+
+    // Les capes son disperses pero es pot alinear a graella.
+
+    I fer greaellla de bools per fer shapes de colisió globals o evitar overlap
+
+    O quadtree per veure colisions en formacio de nivell -_> ajuntar els que soguuin classe Groupabe?
 
 
-Base class entoty with CODE (NETROWRK STYLE), static .CODE, 
-function checkEntity [either in base class hetting static ID or to be implemented in each class],
-entity register (registereng statically on class creatrion) also responible for crating classs from his CODE
+    Ooooo
 
-Interfaces for what?
+    Insertar tot a les diferents capes i un cop esigui tot o mentre es vagiu physicant donsc anar ajuntant els diferents
+    Groupable en bodies que estiguin en una capa virttual,
 
-put addEntoity in Level overloadwd with every parameter
-put addToLevel in Entity and implement in every subclass it needs to <----------------------------
+7)
+    Separar (NOMES!) DRAW en layers.
+    Fer funcio per fer merge de entitats estatiques en una layer. ?
 
-//--------------
+    Permetre multiples mides de cel·la, totes fetes amb celes XxX
 
-Separar (NOMES!) DRAW en layers.
-Fer funcio per fer merge de entitats estatiques en una layer. ?
+8)
+    Invoker class <- Entity. Stores level inside levelize
 
-Permetre multiples mides de cel·la, totes fetes amb celes XxX
+9)
+    USE ROBIN-MAP/ROBIN-SET FOR entitties in scene (https://github.com/Tessil/robin-map)
 
-//--------------
+-----------------------------------------------------------------------------------------------------------------------
 
-Class.code
+IMPROVEMENTS:
 
-static EntityCode code;
+1)
+    Create DrawableSet and use it in all UIComponents that add drawables
+    Add addDraweable and delDrawable in drawableSet and use them to add/update/delete drawables in UI elements.
 
-EntityCode = {code, mask}
-
-EntotyCode Class::code = EntityFactory::register(parent_class)
-
-MUST BE DETERMINIUSTIC, OTHERWISE DEFINE CODE PRIOR AND THEN REGISTER WITH CODE OR STR CODE
-
-//---------------
-
-Invoker class <- Entity. Stores level inside levelize
-
-//--------------
-
-Crear classe gfroupable per poder agrupar blocs
-
-// Les capes son disperses pero es pot alinear a graella.
-
-I fer greaellla de bools per fer shapes de colisió globals o evitar overlap
-
-O quadtree per veure colisions en formacio de nivell -_> ajuntar els que soguuin classe Groupabe?
+2)
+    Create Style Inerface with getDefault?
 
 
-Ooooo
+-----------------------------------------------------------------------------------------------------------------------
 
-Insertar tot a les diferents capes i un cop esigui tot o mentre es vagiu physicant donsc anar ajuntant els diferents
-Groupable en bodies que estiguin en una capa virttual,
+POSIBLE BUGS:
 
-//------------------------
+1)
+    ...EN TOTS ELS HANDLE EVENTS QUE REPOSICIONEM A COORDENADES LOCALS HEM DE INVERTIR TAMBÉ EL SCALE?
 
-PatoFile per treballar amb fitcers generats per el joc (nivells, dialegs, menus, ...)?
 
-//-----
+-----------------------------------------------------------------------------------------------------------------------
 
-Creaate Updatabe y Inputable inbterfaces?
+_OLD:
 
-Create Style Inerface with getDefault?
+1)
+    Engine:
+    NO - Add schenemanager parameter to scenes witrh Close and Change scene operation
+    - Add WindowInfo parameter to scenes with window info
+    OK - Resolutions? Pyshic/Logic resolution, automatic scling?
 
-//-----
 
-//---
+2)
+    Patogaem:
+    - Add IsX to Entity()
+    - Drawable -> Ttransfformabe to other class?
 
-Create DrawableSet and use it in all UIComponents that add drawables
 
-Add addDraweable and delDrawable in drawableSet and use them to add/update/delete drawables in UI elements.
+    Base class entoty with CODE (NETROWRK STYLE), static .CODE, 
+    function checkEntity [either in base class hetting static ID or to be implemented in each class],
+    entity register (registereng statically on class creatrion) also responible for crating classs from his CODE
 
-//---
+3)
+    Class.code
 
-USE ROBIN-MAP/ROBIN-SET FOR entitties in scene (https://github.com/Tessil/robin-map)
+    static EntityCode code;
 
-// ----
+    EntityCode = {code, mask}
 
-What about doing that tile editor thing i think abount doing VJ
+    EntotyCode Class::code = EntityFactory::register(parent_class)
 
-Multiple types of layers (tile, backgroud, sparse, irregular, ...)
-Use graph/tree/union fidn for map with tiles with diferent sizes/shapes for marking tiles that depend on others?
-For irregular/sparse use some algorith for detect overlapping?
+    MUST BE DETERMINIUSTIC, OTHERWISE DEFINE CODE PRIOR AND THEN REGISTER WITH CODE OR STR CODE
 
-//JUNK
-...EN TOTS ELS HANDLE EVENTS QUE REPOSICIONEM A COORDENADES LOCALS HEM DE INVERTIR TAMBÉ EL SCALE?

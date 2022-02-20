@@ -1,31 +1,31 @@
 
 #include "Level.h"
 
-Level::Level() {}
+Level::Level() : world(b2Vec2(0.f, 10.f))
+{
+    layers.push_back(Layer());
+}
 
 Level::~Level()
 {
-    for(auto& entity : entities)
-    {
-        delete entity.second;
-    }
+    entities.clear();
 }
 
-void Level::add(Entity* entity)
+void Level::addEntity(Entity* entity)
 {
-    entities.insert(std::make_pair(entity->getId(), entity));
+    entity->levelize(this, 0);
 }
 
-void Level::del(unsigned int id)
+void Level::delEntity(Entity* entity)
 {
-    entities.erase(id);
+    entity->unlevelize();
 }
 
 void Level::update(const sf::Time& deltatime)
 {
     for(auto& entity : entities)
     {
-        entity.second->update(deltatime);
+        entity->update(deltatime);
     }
 }
 
@@ -33,6 +33,6 @@ void Level::draw(Renderer renderer) const
 {
     for(auto& entity : entities)
     {
-        renderer(*entity.second);
+        renderer(*entity);
     }
 }

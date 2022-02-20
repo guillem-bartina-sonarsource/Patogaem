@@ -24,7 +24,7 @@ struct UICanvasStyle
     EUICanvasVerticalSliderPosition verticalSliderPosition;
     EUICanvasHorizontalSliderPosition horizontalSliderPosition;
     float sliderThickness;
-    int scrollSensitivity;
+    float scrollSensitivity;
 
     static UICanvasStyle defaultStyle()
     {
@@ -32,7 +32,7 @@ struct UICanvasStyle
             EUICanvasVerticalSliderPosition::RIGHT,
             EUICanvasHorizontalSliderPosition::BOTTOM,
             10.f,
-            10
+            10.f
         };
     }
 };

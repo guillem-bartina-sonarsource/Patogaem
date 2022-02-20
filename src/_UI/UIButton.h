@@ -36,8 +36,8 @@ class UIButton : public UIRect
 
     private:
 
-    const UIButtonStyle style;
     const UICallback callback;
+    const UIButtonStyle style;
 
     bool mouseInside;
     bool buttonPressed;

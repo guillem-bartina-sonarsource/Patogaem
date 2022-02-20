@@ -8,16 +8,19 @@
 
 #include "Entity.h"
 
-class PhysicEntity : public Entity
+class PhysicEntity : public Entity, public _EntityRegistration<PhysicEntity, Entity, "PhysicEntity">
 {
     public:
+
+    using _EntityRegistration<PhysicEntity, Entity, "PhysicEntity">::snode;
 
     PhysicEntity(const sf::Vector2f& position, const sf::Vector2f& size, sf::Drawable* drawable = nullptr);
     ~PhysicEntity();
 
     virtual void update(const sf::Time deltatime) override;
 
-    virtual void levelize(Level* level) override;
+    virtual void levelize(Level* level, int layer) override;
+    virtual void unlevelize() override;
 
     protected:
 

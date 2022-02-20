@@ -3,7 +3,9 @@
 
 #include "Engine/Resources.h"
 
-const _EntityRegistryNode* TestEntity::_fixnode = _EntityRegistry::registerClass("TestEntity", Entity::_fixnode);
+#include "Level.h"
+
+//const _EntityRegistryNode* TestEntity::_fixnode = _EntityRegistry::registerClass("TestEntity", Entity::_fixnode);
 
 TestEntity::TestEntity(const sf::Vector2f& position)
 : Entity(position, sf::Vector2f(64, 128))
@@ -62,7 +64,7 @@ void TestEntity::update(const sf::Time deltatime)
     {
         vel.y *= -1.f;
         Entity* entity = new TestEntity(sf::Vector2f(200, 200));
-        entity->levelize(level);
+        level->addEntity(entity);
     }
     move(vel * deltatime.asSeconds() * 10.f);
     sprite->update(deltatime);

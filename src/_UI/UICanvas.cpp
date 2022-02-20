@@ -8,9 +8,9 @@
 
 UICanvas::UICanvas(const sf::Vector2f& canvasSize, UICanvasStyle style, UIComponent* content)
 : UIComponent(EUIAlign::EUIAlign_NONE, EUIFit::EUIFit_NONE, sf::Vector2f(), sf::Vector2f(-1.f, -1.f)),
+content(content),
 canvasSize(canvasSize),
 style(style),
-content(content),
 inner(nullptr),
 verticalSlider(false),
 horizontalSlider(false),

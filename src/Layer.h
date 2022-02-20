@@ -1,9 +1,9 @@
 #ifndef LAYER_HPP
 #define LAYER_HPP
 
-#include "EntityCollection.h"
+#include "SFML/Graphics/Drawable.hpp"
 
-//Backgroud (images), tilemap, sparse tile map, ...
+#include "patogaem/robin_set.h"
 
 class Layer
 {
@@ -12,10 +12,17 @@ class Layer
     Layer();
     ~Layer();
 
+    void bindDrawable(sf::Drawable* drawable);
+    void unbindDrawable(sf::Drawable* drawable);
+
+    void clearDrawables();
+
     private:
 
-    //EntityCollection* entities;
+    tsl::robin_set<sf::Drawable*> drawables;
 
 };
+
+//Backgroud (images), tilemap, sparse tile map, ...
 
 #endif
